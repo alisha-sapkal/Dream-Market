@@ -78,8 +78,8 @@ const listings = [
 
 function Explore() {
   return (
-    <section className="py-12 bg-gray-100 flex flex-row justify-center items-center mx-auto">
-      <div className="text-start bg-white rounded-2xl flex flex-col justify-between p-8 self-center min-w-[320px] max-w-md ml-8">
+    <section className="py-8 sm:py-10 md:py-12 bg-gray-100 flex flex-col md:flex-row justify-center items-center mx-auto gap-6 md:gap-0">
+      <div className="text-start bg-white rounded-2xl flex flex-col justify-between p-4 sm:p-6 md:p-8 self-center min-w-[220px] max-w-md w-full md:w-auto mx-auto md:ml-8 mb-4 md:mb-0">
         <div>
           <h2 className="text-3xl sm:text-3xl font-semibold mb-2 text-start">
             Explore & Find your Dream home
@@ -100,7 +100,7 @@ function Explore() {
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap justify-center gap-2 w-full max-w-7xl mx-auto overflow-y-auto max-h-[600px] scrollbar-none text-start">
+      <div className="flex flex-wrap justify-center gap-2 w-full max-w-7xl mx-auto overflow-y-auto max-h-[600px] scrollbar-none text-start" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         {listings.map((listing, idx) => (
           <div
             key={idx}
@@ -150,3 +150,7 @@ function Explore() {
 }
 
 export default Explore;
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+/* Add this at the end of the file or in a global CSS file if not using Tailwind's scrollbar-none */
+/* .scrollbar-none::-webkit-scrollbar { display: none; } */
