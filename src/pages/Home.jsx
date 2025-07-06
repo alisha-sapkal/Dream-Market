@@ -1,8 +1,8 @@
-import HeroSection from '../components/HeroSection';
-import Offer from '../components/Offer';
-import Explore from '../components/Explore';
-import Listing from '../components/Listing';
-import Info from '../components/Info';
+import HeroSection from '../components/Home/HeroSection';
+import Offer from '../components/Home/Offer';
+import Explore from '../components/Home/Explore';
+import Listing from '../components/Home/Listing';
+import Info from '../components/Home/Info';
 
 export default function Home() {
   return (
