@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
-  { name: 'Search Properties', path: '/' },
+  { name: 'Search Properties', path: '/search-result' },
   { name: 'Favourite', path: '/favourite' },
   { name: 'Profile', path: '/profile' },
   { name: 'Submit Property', path: '/submit-property' },

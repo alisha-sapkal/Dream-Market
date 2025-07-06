@@ -1,5 +1,5 @@
-import React from "react";
-import { BedDouble, Bath, RulerDimensionLine } from 'lucide-react';
+import React, { useState } from "react";
+import { BedDouble, Bath, RulerDimensionLine, Heart } from 'lucide-react';
 
 const listings = [
   {
@@ -77,6 +77,8 @@ const listings = [
 ];
 
 function Explore() {
+  const [liked, setLiked] = useState(Array(listings.length).fill(false));
+  const toggleLike = idx => setLiked(liked => liked.map((v, i) => i === idx ? !v : v));
   return (
     <section className="py-8 sm:py-10 md:py-12 bg-gray-100 flex flex-col md:flex-row justify-center items-center mx-auto gap-6 md:gap-0">
       <div className="text-start bg-white rounded-2xl flex flex-col justify-between p-4 sm:p-6 md:p-8 self-center min-w-[220px] max-w-md w-full md:w-auto mx-auto md:ml-8 mb-4 md:mb-0">
@@ -120,6 +122,14 @@ function Explore() {
                 <span className="bg-primary text-white text-xs font-semibold uppercase rounded-full px-3 py-1 shadow">
                   {listing.category}
                 </span>
+              </div>
+              <div className="absolute top-4 right-4">
+                <Heart
+                  className={`w-6 h-6 cursor-pointer transition-colors ${liked[idx] ? 'fill-red-500 text-red-500' : 'fill-none text-gray-300'}`}
+                  strokeWidth={2.5}
+                  onClick={() => toggleLike(idx)}
+                  fill={liked[idx] ? '#ef4444' : 'none'}
+                />
               </div>
             </div>
             <div className="flex justify-around mt-2 items-center">

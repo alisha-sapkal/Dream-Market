@@ -1,5 +1,5 @@
-import React from "react";
-import { BedDouble, Bath, RulerDimensionLine } from 'lucide-react';
+import React, { useState } from "react";
+import { BedDouble, Bath, RulerDimensionLine, Heart } from 'lucide-react';
 
 const listings = [
   {
@@ -77,6 +77,8 @@ const listings = [
 ];
 
 function Listing() {
+  const [liked, setLiked] = useState(Array(listings.length).fill(false));
+  const toggleLike = idx => setLiked(liked => liked.map((v, i) => i === idx ? !v : v));
   return (
     <section className="py-8 sm:py-10 md:py-12 px-2 sm:px-4 md:px-8">
       <div className="mb-6 sm:mb-8">
@@ -103,6 +105,14 @@ function Listing() {
                 <span className="bg-primary text-white text-[10px] sm:text-xs font-semibold uppercase rounded-full px-2 sm:px-3 py-0.5 sm:py-1 shadow">
                   {listing.category}
                 </span>
+              </div>
+              <div className="absolute top-3 right-3">
+                <Heart
+                  className={`w-6 h-6 cursor-pointer transition-colors ${liked[idx] ? 'fill-red-500 text-red-500' : 'fill-none text-gray-300'}`}
+                  strokeWidth={2.5}
+                  onClick={() => toggleLike(idx)}
+                  fill={liked[idx] ? '#ef4444' : 'none'}
+                />
               </div>
             </div>
             <div className="flex justify-around mt-2 items-center px-2 sm:px-3">
