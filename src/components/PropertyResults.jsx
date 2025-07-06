@@ -50,8 +50,8 @@ export default function PropertyResults() {
         position: "relative",
       }}
     >
-      <div className="relative z-10 flex flex-col items-center w-full max-w-6xl min-h-[400px] justify-around rounded-2xl">
-        <div className="flex flex-row items-center justify-between w-full mb-4">
+      <div className="relative z-10 flex flex-col items-center w-full max-w-6xl min-h-[200px] justify-around rounded-2xl">
+        <div className="flex flex-col items-center justify-between w-full sm:flex-row">
           <div className="flex flex-row items-center gap-2">
             <h2 className="text-3xl text-white drop-shadow-lg">
               Properties Results
@@ -64,7 +64,7 @@ export default function PropertyResults() {
             <Search className="text-sm text-gray-500"/>
             <span className="text-sm text-gray-500">Search Properties...</span></div>
         </div>
-        <div className="flex flex-wrap justify-center gap-2 mb-4 max-w-6xl w-full rounded-full bg-white/20 backdrop-blur-md p-2">
+        <div className="flex flex-wrap justify-center gap-2 max-w-6xl w-full rounded-full bg-white/20 backdrop-blur-md p-2">
           {filters.map((cat) => (
             <button
               key={cat}
@@ -77,84 +77,42 @@ export default function PropertyResults() {
             </button>
           ))}
         </div>
-        <form className="bg-white/20 backdrop-blur-md p-2 flex flex-col sm:flex-row gap-2 max-w-6xl w-full mx-auto rounded-full mb-8">
+        <form className="bg-white/20 backdrop-blur-md p-2 flex flex-col sm:flex-row gap-2 max-w-6xl w-full mx-auto rounded-full">
           <input
             type="text"
             placeholder="Location"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            className="flex-1 px-3 py-2 border focus:outline-none bg-white/40 text-white placeholder-white/80 rounded-full"
+            className="w-full sm:flex-1 px-3 py-2 border focus:outline-none bg-white/40 text-white placeholder-white/80 rounded-full"
           />
-          <div className="relative w-full">
+          <div className="relative w-full sm:flex-1">
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="flex-1 text-sm px-3 py-2 border focus:outline-none bg-white/40 text-white rounded-full pr-10 appearance-none w-full custom-blur-select"
+              className="w-full text-sm px-3 py-2 border focus:outline-none bg-white/40 text-white rounded-full pr-10 appearance-none custom-blur-select"
             >
-              <option className="bg-white/20 backdrop-blur-md text-white">
-                Property Category
-              </option>
+              <option className="bg-white/20 backdrop-blur-md text-white">Property Category</option>
               {categories.map((c) => (
-                <option
-                  key={c}
-                  value={c}
-                  className="bg-white/20 backdrop-blur-md text-white"
-                >
-                  {c}
-                </option>
+                <option key={c} value={c} className="bg-white/20 backdrop-blur-md text-white">{c}</option>
               ))}
             </select>
             <span className="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 text-white">
-              <svg
-                width="20"
-                height="20"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
             </span>
           </div>
-          <div className="relative w-full">
+          <div className="relative w-full sm:flex-1">
             <select
               value={bedroom}
               onChange={(e) => setBedroom(e.target.value)}
-              className="flex-1 text-sm px-3 py-2 border focus:outline-none bg-white/40 text-white rounded-full pr-10 appearance-none w-full custom-blur-select"
+              className="w-full text-sm px-3 py-2 border focus:outline-none bg-white/40 text-white rounded-full pr-10 appearance-none custom-blur-select"
             >
-              <option className="bg-white/20 backdrop-blur-md text-white">
-                Bedroom
-              </option>
+              <option className="bg-white/20 backdrop-blur-md text-white">Bedroom</option>
               {bedrooms.map((b) => (
-                <option
-                  key={b}
-                  value={b}
-                  className="bg-white/20 backdrop-blur-md text-white"
-                >
-                  {b}
-                </option>
+                <option key={b} value={b} className="bg-white/20 backdrop-blur-md text-white">{b}</option>
               ))}
             </select>
             <span className="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 text-white">
-              <svg
-                width="20"
-                height="20"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
             </span>
           </div>
           <button
@@ -164,7 +122,7 @@ export default function PropertyResults() {
               setCategory("");
               setBedroom("");
             }}
-            className="bg-primary text-black bg-white px-4 py-2 rounded-full font-semibold hover:bg-primary-dark"
+            className="w-full sm:flex-1 bg-primary text-black bg-white px-4 py-2 rounded-full font-semibold hover:bg-primary-dark"
           >
             Reset Filters
           </button>

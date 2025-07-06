@@ -2,7 +2,7 @@ import {motion} from 'framer-motion'
 
 
 const HERO_BG =
-  "url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80')"; // dark modern interior
+  "url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80')";
 
 const categories = ["Rent", "Sale", "Commercial", "Land", "Lease"];
 

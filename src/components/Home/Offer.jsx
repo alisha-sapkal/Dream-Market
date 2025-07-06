@@ -36,7 +36,7 @@ const offers = [
 function Offer() {
   return (
     <section className="py-10">
-      <div className="mb-8">
+      <div className="mb-8 p-2">
         <h1 className="text-2xl sm:text-3xl font-semibold text-start mb-1">Luxury Lives Here</h1>
         <p className="text-gray-700 text-start">Your trusted real estate partner in every transaction.</p>
       </div>
@@ -44,7 +44,7 @@ function Offer() {
         {offers.map((offer) => (
           <div
             key={offer.type}
-            className="group rounded-2xl bg-white/30 text-start backdrop-blur-md shadow-lg flex flex-col items-stretch overflow-hidden hover:scale-105 transition-transform duration-300"
+            className="group rounded-2xl bg-white/30 text-start backdrop-blur-md shadow-lg flex flex-col items-stretch overflow-hidden hover:scale-105 transition-transform duration-300 sm:px-2 p-2"
           >
             <div className="relative">
               <img
