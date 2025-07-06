@@ -1,5 +1,6 @@
 import { useState } from "react";
-import {Search} from 'lucide-react';
+import { Search } from 'lucide-react';
+import { properties } from './PropertyCards';
 
 const HERO_BG =
   "url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80')"; // dark modern interior
@@ -7,75 +8,6 @@ const HERO_BG =
 const filters = ["Rent", "Sale", "Commercial", "Land", "Lease"];
 const categories = ["Apartment", "House", "Commercial", "Land", "Lease"];
 const bedrooms = ["1", "2", "3", "4+"];
-
-const properties = [
-  {
-    id: 1,
-    image:
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
-    type: "Rent",
-    price: "$350,000",
-    address: "29, Pine Avenue, Kent, UK",
-    details: "2 Beds • 2 Baths • 78.5 m²",
-    category: "Apartment",
-    bedroom: "2",
-  },
-  {
-    id: 2,
-    image:
-      "https://images.unsplash.com/photo-1460518451285-97b6aa326961?auto=format&fit=crop&w=400&q=80",
-    type: "Sale",
-    price: "$450,000",
-    address: "68, McLewin, London, UK",
-    details: "4 Beds • 2 Baths • 120 m²",
-    category: "House",
-    bedroom: "4+",
-  },
-  {
-    id: 3,
-    image:
-      "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=400&q=80",
-    type: "Commercial",
-    price: "$300,000",
-    address: "203 Evy Street, Suite 4, Westminster",
-    details: "3 Beds • 3 Baths • 95 m²",
-    category: "Duplex",
-    bedroom: "3",
-  },
-  {
-    id: 4,
-    image:
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
-    type: "Commercial",
-    price: "$150,000",
-    address: "14 Glover, Birmingham, UK",
-    details: "0 Beds • 1 Bath • 60 m²",
-    category: "Industrial",
-    bedroom: "1",
-  },
-  {
-    id: 5,
-    image:
-      "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=400&q=80",
-    type: "Lease",
-    price: "$400,000",
-    address: "88 Collyer Avenue, Leeds, UK",
-    details: "3 Beds • 2 Baths • 110 m²",
-    category: "Apartment",
-    bedroom: "3",
-  },
-  {
-    id: 6,
-    image:
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
-    type: "Lease",
-    price: "$40,000",
-    address: "34, Queens, Manchester, UK",
-    details: "2 Beds • 3 Baths • 90 m²",
-    category: "Apartment",
-    bedroom: "2",
-  },
-];
 
 export default function PropertyResults() {
   const [active, setActive] = useState("Rent");
@@ -110,7 +42,7 @@ export default function PropertyResults() {
               Properties Results
             </h2>
             <span className="text-xs text-white/80 font-semibold border-1 border-gray-100 rounded-xl p-2">
-              {filtered.length}
+              {properties.length}
             </span>
           </div>
           <div className="flex flex-row gap-4 bg-white rounded-full text-sm text-gray-500 p-2">

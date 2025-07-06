@@ -3,11 +3,10 @@ import React from "react";
 function Info() {
   return (
     <section className="py-8 px-2 sm:px-4 md:px-8 bg-white/80 backdrop-blur rounded-2xl max-w-8xl my-8">
-      {/* Responsive YouTube Video */}
       <div className="w-full mb-8 rounded-2xl" style={{ aspectRatio: "16/9" }}>
         <iframe
           className="w-full h-full rounded-2xl"
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          src="https://www.youtube.com/embed/VuRZVevLAXc"
           title="Dwello Info Video"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

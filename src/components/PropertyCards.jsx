@@ -1,7 +1,7 @@
 import { BedDouble, Bath, RulerDimensionLine, Heart } from 'lucide-react';
 import { useState } from "react";
 
-const properties = [
+export const properties = [
   {
     id: 1,
     image:
