@@ -1,8 +1,8 @@
 import HeroSection from '../components/HeroSection';
-import FeaturedListings from '../components/FeaturedListings';
 import Offer from '../components/Offer';
 import Explore from '../components/Explore';
 import Listing from '../components/Listing';
+import Info from '../components/Info';
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
       <Offer />
       <Explore />
       <Listing />
-      <FeaturedListings />
+      <Info />
     </div>
   );
 } 
