@@ -90,16 +90,13 @@ export const properties = [
 function updateFavourites(property, liked) {
   let favs = JSON.parse(localStorage.getItem('favourites') || '[]');
   if (!liked) {
-    // Add to favourites if not already present
     if (!favs.some(fav => fav.id === property.id)) {
       favs.push(property);
     }
   } else {
-    // Remove from favourites
     favs = favs.filter(fav => fav.id !== property.id);
   }
   localStorage.setItem('favourites', JSON.stringify(favs));
-  // Dispatch a custom event so other components can update
   window.dispatchEvent(new Event('favouritesUpdated'));
 }
 
@@ -113,7 +110,6 @@ export default function PropertyCards() {
 
   useEffect(() => {
     setLiked(getInitialLiked());
-    // Listen for updates from other tabs/components
     const handler = () => setLiked(getInitialLiked());
     window.addEventListener('favouritesUpdated', handler);
     return () => window.removeEventListener('favouritesUpdated', handler);

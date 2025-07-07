@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import SearchResult from './pages/SearchResult';
+import Favourite from './pages/Favourite';
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -33,6 +34,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<SignIn />} />
           <Route path="/search-result" element={<SearchResult />} />
+          <Route path="/favourite" element={<Favourite />} />
           {/* Add more routes here for other pages */}
         </Routes>
       </Layout>

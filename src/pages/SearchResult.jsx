@@ -1,5 +1,5 @@
-import PropertyCards from '../components/PropertyCards';
-import PropertyResults from '../components/PropertyResults';
+import PropertyCards from '../components/SearchProperties/PropertyCards';
+import PropertyResults from '../components/SearchProperties/PropertyResults';
 
 export default function SearchResult() {
   return (
