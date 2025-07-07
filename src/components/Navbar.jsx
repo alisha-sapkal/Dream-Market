@@ -13,6 +13,7 @@ export default function Navbar() {
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('user')));
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,15 +23,27 @@ export default function Navbar() {
         return;
       }
       if (window.scrollY > lastScrollY) {
-        setShow(false); // scrolling down
+        setShow(false);
       } else {
-        setShow(true); // scrolling up
+        setShow(true);
       }
       setLastScrollY(window.scrollY);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
+
+  useEffect(() => {
+    const syncUser = () => setUser(JSON.parse(localStorage.getItem('user')));
+    window.addEventListener('storage', syncUser);
+    return () => window.removeEventListener('storage', syncUser);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+    window.dispatchEvent(new Event('storage'));
+  };
 
   return (
     <nav
@@ -46,8 +59,16 @@ export default function Navbar() {
             ))}
           </div>
           <div className="hidden md:flex">
-            <Link to="/signup" className="ml-4 px-4 py-1 bg-black text-white rounded-full hover:bg-primary-dark">Sign Up</Link>
-            <Link to="/login" className="ml-2 px-4 py-1 text-center border bg-gray-200 rounded-full hover:bg-primary-light">Login</Link>
+            {user ? (
+              <>
+                <button onClick={handleLogout} className="ml-2 px-4 py-1 text-center border bg-gray-200 rounded-full hover:bg-red-400">Logout</button>
+              </>
+            ) : (
+              <>
+                <Link to="/signup" className="ml-4 px-4 py-1 bg-black text-white rounded-full hover:bg-primary-dark">Sign Up</Link>
+                <Link to="/login" className="ml-2 px-4 py-1 text-center border bg-gray-200 rounded-full hover:bg-primary-light">Login</Link>
+              </>
+            )}
           </div>
           <button className="md:hidden p-2 rounded focus:outline-none" onClick={() => setMobileOpen(!mobileOpen)}>
             {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -59,8 +80,16 @@ export default function Navbar() {
               <Link key={link.name} to={link.path} className="text-gray-700 hover:text-primary font-medium py-2" onClick={() => setMobileOpen(false)}>{link.name}</Link>
             ))}
             <div className="flex flex-col gap-2 mt-2">
-              <Link to="/signup" className="px-4 py-2 bg-black text-white rounded-full hover:bg-primary-dark">Sign Up</Link>
-              <Link to="/login" className="px-4 py-2 text-center border bg-gray-200 rounded-full hover:bg-primary-light">Login</Link>
+              {user ? (
+                <>
+                  <button onClick={handleLogout} className="px-4 py-2 text-center border bg-gray-200 rounded-full hover:bg-red-400">Logout</button>
+                </>
+              ) : (
+                <>
+                  <Link to="/signup" className="px-4 py-2 bg-black text-white rounded-full hover:bg-primary-dark">Sign Up</Link>
+                  <Link to="/login" className="px-4 py-2 text-center border bg-gray-200 rounded-full hover:bg-primary-light">Login</Link>
+                </>
+              )}
             </div>
           </div>
         )}

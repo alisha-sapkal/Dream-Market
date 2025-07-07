@@ -1,22 +1,65 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignIn() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
+  const [showReset, setShowReset] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetSent, setResetSent] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setError('');
-    alert('Sign in successful!');
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: form.email, password: form.password })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Login failed');
+      localStorage.setItem('user', JSON.stringify(data.user));
+      window.dispatchEvent(new Event('storage'));
+      toast.success('Login successful!');
+      setTimeout(() => navigate('/'), 1200);
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+
+  const handleResetSubmit = async e => {
+    e.preventDefault();
+    try {
+      const res = await fetch('/api/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: resetEmail })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Reset failed');
+      toast.success('Password reset email sent! Please check your inbox.');
+      setResetSent(true);
+      setTimeout(() => {
+        setShowReset(false);
+        setResetSent(false);
+        setResetEmail('');
+      }, 3000);
+    } catch (err) {
+      toast.error(err.message || 'Reset failed. Please try again.');
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row gap-10 justify-center items-center py-8 px-2 md:px-4 bg-cover bg-center relative">
+      <ToastContainer position="top-right" />
       <div
         className="w-full md:w-1/2 flex flex-col justify-center items-center py-8 px-2 md:px-4 bg-cover bg-center relative min-h-[350px]"
         style={{
@@ -26,44 +69,71 @@ export default function SignIn() {
       >
         <div className="w-full max-w-md bg-white/30 backdrop-blur-lg rounded-2xl shadow-lg p-4 md:p-8">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-2 text-black">
-            Sign in
+            {showReset ? 'Reset Password' : 'Sign in'}
           </h2>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={form.email}
-              onChange={handleChange}
-              required
-              className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80"
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
-              required
-              className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80"
-            />
-            {error && <div className="text-red-500 text-xs mb-2">{error}</div>}
-            <button
-              type="submit"
-              className="w-full py-3 bg-black text-white rounded-lg font-bold text-lg transition-colors"
-            >
-              Sign In
-            </button>
-            <p className="text-center text-gray-600 mb-6">
-              Don't have an account?{" "}
-              <Link
-                to="/signup"
-                className="text-black font-semibold hover:underline"
+          {showReset ? (
+            <form onSubmit={handleResetSubmit} className="flex flex-col gap-4">
+              <input
+                type="email"
+                name="resetEmail"
+                placeholder="Enter your email"
+                value={resetEmail}
+                onChange={e => setResetEmail(e.target.value)}
+                required
+                className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80"
+              />
+              <button
+                type="submit"
+                className="w-full py-3 bg-black text-white rounded-lg font-bold text-lg transition-colors"
               >
-                Sign Up
-              </Link>
-            </p>
-          </form>
+                Send Reset Link
+              </button>
+              {resetSent && <div className="text-green-600 text-sm">Check your email for a reset link.</div>}
+              <button type="button" className="text-sm text-gray-600 underline mt-2" onClick={() => setShowReset(false)}>
+                Back to Login
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80"
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={form.password}
+                onChange={handleChange}
+                required
+                className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80"
+              />
+              {error && <div className="text-red-500 text-xs mb-2">{error}</div>}
+              <button
+                type="submit"
+                className="w-full py-3 bg-black text-white rounded-lg font-bold text-lg transition-colors"
+              >
+                Sign In
+              </button>
+              <button type="button" className="text-sm text-gray-600 underline mt-2" onClick={() => setShowReset(true)}>
+                Forgot password?
+              </button>
+              <p className="text-center text-gray-600 mb-6">
+                Don't have an account?{' '}
+                <Link
+                  to="/signup"
+                  className="text-black font-semibold hover:underline"
+                >
+                  Sign Up
+                </Link>
+              </p>
+            </form>
+          )}
           <div className="mt-6 text-center text-xs text-gray-400">
             Powered by FramerAuth
           </div>

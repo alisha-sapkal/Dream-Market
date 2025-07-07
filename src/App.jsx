@@ -6,6 +6,8 @@ import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import SearchResult from './pages/SearchResult';
 import Favourite from './pages/Favourite';
+import Profile from './pages/Profile';
+import SubmitProperty from './pages/SubmitProperty';
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -35,6 +37,8 @@ function App() {
           <Route path="/login" element={<SignIn />} />
           <Route path="/search-result" element={<SearchResult />} />
           <Route path="/favourite" element={<Favourite />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/submit-property" element={<SubmitProperty />} />
           {/* Add more routes here for other pages */}
         </Routes>
       </Layout>

@@ -1,26 +1,48 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SignUp() {
   const [form, setForm] = useState({ email: "", password: "", confirm: "" });
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (form.password !== form.confirm) {
       setError("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
     setError("");
-    alert("Sign up successful!");
+    try {
+      const res = await fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: form.email, password: form.password })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        let msg = data.message || "Signup failed. Please try again.";
+        if (msg.toLowerCase().includes("email")) msg = "This email is already registered.";
+        toast.error(msg);
+        return;
+      }
+      toast.success("Signup successful! Please log in.");
+      setTimeout(() => navigate("/login"), 1200);
+    } catch (err) {
+      toast.error("Network error. Please try again later.");
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row gap-10 justify-center items-center py-8 px-2 md:px-4 bg-cover bg-center relative">
+      <ToastContainer position="top-right" />
       <div
         className="w-full md:w-1/2 flex flex-col justify-center items-center py-8 px-2 md:px-4 bg-cover bg-center relative min-h-[350px]"
         style={{
@@ -76,7 +98,7 @@ export default function SignUp() {
                 Log In
               </Link>
             </p>
-            <div className="text-xs text-gray-500 mb-2">
+            <div className="text-xs text-gray-600 mb-2">
               Password: At least 8 characters, one uppercase letter, one
               lowercase letter, one digit, one special character
             </div>
