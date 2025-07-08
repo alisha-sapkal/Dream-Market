@@ -94,45 +94,45 @@ export default function SignIn() {
               </button>
             </form>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80"
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={form.password}
-                onChange={handleChange}
-                required
-                className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80"
-              />
-              {error && <div className="text-red-500 text-xs mb-2">{error}</div>}
-              <button
-                type="submit"
-                className="w-full py-3 bg-black text-white rounded-lg font-bold text-lg transition-colors"
-              >
-                Sign In
-              </button>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80"
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={form.password}
+              onChange={handleChange}
+              required
+              className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80"
+            />
+            {error && <div className="text-red-500 text-xs mb-2">{error}</div>}
+            <button
+              type="submit"
+              className="w-full py-3 bg-black text-white rounded-lg font-bold text-lg transition-colors"
+            >
+              Sign In
+            </button>
               <button type="button" className="text-sm text-gray-600 underline mt-2" onClick={() => setShowReset(true)}>
                 Forgot password?
               </button>
-              <p className="text-center text-gray-600 mb-6">
+            <p className="text-center text-gray-600 mb-6">
                 Don't have an account?{' '}
-                <Link
-                  to="/signup"
-                  className="text-black font-semibold hover:underline"
-                >
-                  Sign Up
-                </Link>
-              </p>
-            </form>
+              <Link
+                to="/signup"
+                className="text-black font-semibold hover:underline"
+              >
+                Sign Up
+              </Link>
+            </p>
+          </form>
           )}
           <div className="mt-6 text-center text-xs text-gray-400">
             Powered by FramerAuth

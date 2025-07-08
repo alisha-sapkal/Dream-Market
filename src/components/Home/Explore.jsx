@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BedDouble, Bath, RulerDimensionLine, Heart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const listings = [
   {
@@ -78,6 +79,7 @@ const listings = [
 
 function Explore() {
   const [liked, setLiked] = useState(Array(listings.length).fill(false));
+  const navigate = useNavigate();
   const toggleLike = idx => setLiked(liked => liked.map((v, i) => i === idx ? !v : v));
   return (
     <section className="py-8 sm:py-10 md:py-12 bg-gray-100 flex flex-col md:flex-row justify-center items-center mx-auto gap-6 md:gap-0">
@@ -123,17 +125,20 @@ function Explore() {
                   {listing.category}
                 </span>
               </div>
-              <div className="absolute top-4 right-4">
-                <Heart
-                  className={`w-6 h-6 cursor-pointer transition-colors ${liked[idx] ? 'fill-red-500 text-red-500' : 'fill-none text-gray-300'}`}
-                  strokeWidth={2.5}
-                  onClick={() => toggleLike(idx)}
-                  fill={liked[idx] ? '#ef4444' : 'none'}
-                />
+              <div className="absolute top-3 right-3">
+                <div className="bg-white/40 backdrop-blur-xs rounded-full p-2 shadow flex items-center justify-center">
+                  <Heart
+                    className={`w-6 h-6 cursor-pointer transition-colors ${liked[idx] ? 'fill-red-500 text-red-500' : 'fill-none text-gray-300'}`}
+                    strokeWidth={2.5}
+                    onClick={() => toggleLike(idx)}
+                    fill={liked[idx] ? '#ef4444' : 'none'}
+                  />
+                </div>
               </div>
             </div>
             <div className="flex justify-around mt-2 items-center">
-              <div className="flex items-center gap-1 mr-auto border-1 border-gray-200 rounded-full p-1">
+              <div className="flex items-center gap-1 mr-auto border-1 border-gray-200 rounded-full p-1 cursor-pointer hover:bg-gray-100 transition"
+                onClick={() => navigate(`/property-details/${encodeURIComponent(listing.title.toLowerCase().replace(/\s+/g, '-'))}`)}>
                 <img src={listing.image} alt="thumb" className="w-4 h-4 rounded-full object-cover" />
                 <span className="text-sm text-gray-500 font-medium">+4 Images</span>
               </div>

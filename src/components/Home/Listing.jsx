@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BedDouble, Bath, RulerDimensionLine, Heart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const listings = [
   {
@@ -78,6 +79,7 @@ const listings = [
 
 function Listing() {
   const [liked, setLiked] = useState(Array(listings.length).fill(false));
+  const navigate = useNavigate();
   const toggleLike = idx => setLiked(liked => liked.map((v, i) => i === idx ? !v : v));
   return (
     <section className="py-8 sm:py-10 md:py-12 px-2 sm:px-4 md:px-8">
@@ -107,16 +109,19 @@ function Listing() {
                 </span>
               </div>
               <div className="absolute top-3 right-3">
-                <Heart
-                  className={`w-6 h-6 cursor-pointer transition-colors ${liked[idx] ? 'fill-red-500 text-red-500' : 'fill-none text-gray-300'}`}
-                  strokeWidth={2.5}
-                  onClick={() => toggleLike(idx)}
-                  fill={liked[idx] ? '#ef4444' : 'none'}
-                />
+                <div className="bg-white/40 backdrop-blur-xs rounded-full p-2 shadow flex items-center justify-center">
+                  <Heart
+                    className={`w-6 h-6 cursor-pointer transition-colors ${liked[idx] ? 'fill-red-500 text-red-500' : 'fill-none text-gray-300'}`}
+                    strokeWidth={2.5}
+                    onClick={() => toggleLike(idx)}
+                    fill={liked[idx] ? '#ef4444' : 'none'}
+                  />
+                </div>
               </div>
             </div>
             <div className="flex justify-around mt-2 items-center px-2 sm:px-3">
-              <div className="flex items-center gap-1 mr-auto border border-gray-200 rounded-full p-1">
+              <div className="flex items-center gap-1 mr-auto border border-gray-200 rounded-full p-1 cursor-pointer hover:bg-gray-100 transition"
+                onClick={() => navigate(`/property-details/${encodeURIComponent(listing.title.toLowerCase().replace(/\s+/g, '-'))}`)}>
                 <img src={listing.image} alt="thumb" className="w-4 h-4 rounded-full object-cover" />
                 <span className="text-xs text-gray-500 font-medium">+4 Images</span>
               </div>

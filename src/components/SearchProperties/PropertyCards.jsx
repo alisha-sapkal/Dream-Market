@@ -1,5 +1,6 @@
 import { BedDouble, Bath, RulerDimensionLine, Heart } from 'lucide-react';
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 export const properties = [
   {
@@ -107,6 +108,7 @@ function getInitialLiked() {
 
 export default function PropertyCards() {
   const [liked, setLiked] = useState(getInitialLiked());
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLiked(getInitialLiked());
@@ -145,16 +147,19 @@ export default function PropertyCards() {
                 </span>
               </div>
               <div className="absolute top-3 right-3">
-                <Heart
-                  className={`w-6 h-6 cursor-pointer transition-colors ${liked[idx] ? 'fill-red-500 text-red-500' : 'fill-none text-gray-300'}`}
-                  strokeWidth={2.5}
-                  onClick={() => toggleLike(idx)}
-                  fill={liked[idx] ? '#ef4444' : 'none'}
-                />
+                <div className="bg-white/40 backdrop-blur-xs rounded-full p-2 shadow flex items-center justify-center">
+                  <Heart
+                    className={`w-6 h-6 cursor-pointer transition-colors ${liked[idx] ? 'fill-red-500 text-red-500' : 'fill-none text-gray-300'}`}
+                    strokeWidth={2.5}
+                    onClick={() => toggleLike(idx)}
+                    fill={liked[idx] ? '#ef4444' : 'none'}
+                  />
+                </div>
               </div>
             </div>
             <div className="flex justify-around mt-2 items-center px-2 sm:px-3">
-              <div className="flex items-center gap-1 mr-auto border border-gray-200 rounded-full p-1">
+              <div className="flex items-center gap-1 mr-auto border border-gray-200 rounded-full p-1 cursor-pointer hover:bg-gray-100 transition"
+                onClick={() => navigate(`/property-details/${encodeURIComponent(property.title.toLowerCase().replace(/\s+/g, '-'))}`)}>
                 <img
                   src={property.image}
                   alt="thumb"

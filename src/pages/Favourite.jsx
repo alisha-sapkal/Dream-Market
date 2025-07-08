@@ -22,6 +22,9 @@ export default function Favourite() {
     return () => window.removeEventListener('favouritesUpdated', updateFavs);
   }, []);
 
+  const favs = JSON.parse(localStorage.getItem('favourites') || '[]');
+  localStorage.setItem('favourites', JSON.stringify(favs.filter(fav => fav && fav.image)));
+
   return (
     <section className="py-10 px-4 max-w-6xl mx-auto">
       {favourites.length === 0 ? (
@@ -54,13 +57,15 @@ export default function Favourite() {
                   </span>
                 </div>
                 <div className="absolute top-3 right-3">
-                  <Heart
-                    className="w-6 h-6 fill-red-500 text-red-500 cursor-pointer"
-                    strokeWidth={2.5}
-                    fill={'#ef4444'}
-                    onClick={() => removeFromFavourites(property.id)}
-                    title="Remove from favourites"
-                  />
+                  <div className="bg-white/40 backdrop-blur-xs rounded-full p-2 shadow flex items-center justify-center">
+                    <Heart
+                      className="w-6 h-6 fill-red-500 text-red-500 cursor-pointer"
+                      strokeWidth={2.5}
+                      fill={'#ef4444'}
+                      onClick={() => removeFromFavourites(property.id)}
+                      title="Remove from favourites"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="flex justify-around mt-2 items-center px-2 sm:px-3">
