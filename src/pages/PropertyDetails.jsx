@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MoveLeft, MapPin, UserCircle2, Heart } from "lucide-react";
+import { MoveLeft, MapPin, ChevronRight, Heart } from "lucide-react";
 import { BedDouble, Bath, RulerDimensionLine } from "lucide-react";
 
 const sampleProperty = {
@@ -9,7 +9,7 @@ const sampleProperty = {
   address: "29, Pine Avenue, Kent, UK",
   type: "Apartment",
   rentOrSale: "Rent",
-  location: "Kent",
+  location: "Manchester, Kent, UK",
   bathroom: "2",
   bedroom: "4+",
   size: "6x78.5 m2",
@@ -216,29 +216,32 @@ export default function PropertyDetails() {
             </div>
           </div>
           <div className="w-full md:w-[32rem] md:max-w-xl items-end">
-            <div className="bg-white rounded-2xl shadow-md p-4 flex flex-col items-center">
-              <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-2">
-                <UserCircle2 className="w-16 h-16 text-gray-400" />
+            <div className="bg-white rounded-2xl shadow-md p-4 flex flex-col items-start">
+              <img
+                src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+                alt="Agent House"
+                className="w-full h-full object-cover rounded-2xl"
+              />
+              <div className="flex flex-col border-1 border-gray-100 rounded-xl w-full p-2">
+                <div className="flex flex-row items-center border-1 border-gray-100 rounded-full gap-2 mb-2 px-2 py-1 mt-2 item">
+                  <img
+                    src={p.agent.profileImage}
+                    alt={p.agent.name}
+                    className="w-6 h-6 rounded-full ml-2"
+                  />
+                  <span className="text-sm text-gray-700">{p.location}</span>
+                </div>
+                <div className="font-semibold text-lg text-start text-gray-800 mb-2">
+                  {p.agent.name}
+                </div>
               </div>
-              <div className="flex flex-row items-center gap-2 mb-2">
-                <MapPin className="w-5 h-5 text-primary" />
-                <span className="text-sm text-gray-700">{p.location}</span>
-                <img
-                  src={p.agent.profileImage}
-                  alt={p.agent.name}
-                  className="w-8 h-8 rounded-full border-2 border-primary ml-2"
-                />
-              </div>
-              <div className="font-semibold text-lg text-gray-800 mb-2">
-                {p.agent.name}
-              </div>
+
               <button
-                className="mt-2 px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary-dark transition"
-                onClick={() => {
-                  /* handle view listings, e.g., navigate to agent's listings */
-                }}
+                className="group w-full flex flex-row justify-between mt-2 px-4 py-2 bg-primary text-black rounded-2xl shadow hover:bg-black hover:text-white transition"
+                onClick={() => {}}
               >
-                View Listings
+                <span>View Listings</span>
+                <ChevronRight className="mb-1 group-hover:text-white transition-colors" />
               </button>
             </div>
           </div>
