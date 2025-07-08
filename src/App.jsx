@@ -9,6 +9,7 @@ import Favourite from './pages/Favourite';
 import Profile from './pages/Profile';
 import SubmitProperty from './pages/SubmitProperty';
 import PropertyDetails from './pages/PropertyDetails';
+import AgentProfile from "./pages/AgentProfile";
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -41,6 +42,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/submit-property" element={<SubmitProperty />} />
           <Route path="/property-details/:title" element={<PropertyDetails />} />
+          <Route path="/agent/:agentName" element={<AgentProfile />} />
           {/* Add more routes here for other pages */}
         </Routes>
       </Layout>

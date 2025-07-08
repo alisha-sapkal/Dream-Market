@@ -134,8 +134,8 @@ export default function PropertyDetails() {
   };
 
   return (
-    <div className="w-full bg-white rounded-2xl">
-      <div className="max-w-6xl flex flex-col gap-8">
+    <div className="w-full flex justify-center bg-white rounded-2xl">
+      <div className="max-w-6xl w-full px-4 sm:px-6 md:px-10 py-6 flex flex-col gap-8">
         <div
           onClick={() => navigate("/search-result")}
           className="flex flex-row items-start cursor-pointer p-2 w-fit"
@@ -145,16 +145,16 @@ export default function PropertyDetails() {
             Back to search results
           </button>
         </div>
-        <div className="flex flex-col md:flex-row gap-4 mb-6 w-full">
-          <div className="md:w-1/2 flex-shrink-0">
+        <div className="flex flex-col md:flex-row gap-4 mb-6 w-full md:justify-center items-center md:items-start">
+          <div className="w-full md:w-1/2 flex-shrink-0 mb-4 md:mb-0">
             <img
               src={p.images[0]}
               alt="Main Property"
-              className="rounded-xl object-cover w-full h-72 md:h-96 mb-2"
+              className="rounded-xl object-cover w-full h-56 sm:h-64 md:h-96 mb-2"
             />
           </div>
-          <div className="w-full md:w-3/5 flex-shrink-0">
-            <div className="grid grid-cols-2 grid-rows-2 gap-2 w-full h-72 md:h-96">
+          <div className="w-full md:w-1/2 flex-shrink-0">
+            <div className="grid grid-cols-2 grid-rows-2 gap-2 w-full h-56 sm:h-64 md:h-96">
               {p.images.slice(1, 5).map((img, i) => (
                 <div
                   key={i}
@@ -170,8 +170,8 @@ export default function PropertyDetails() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row gap-10 w-full md:justify-between">
-          <div className="flex flex-col gap-2 flex-grow w-full self-start">
+        <div className="flex flex-col md:flex-row gap-10 w-full md:justify-between items-center md:items-start">
+          <div className="flex flex-col gap-2 flex-grow w-full self-start text-center md:text-left">
             <div className="flex gap-2 text-xs mb-2">
               <span className="bg-gray-100 px-2 py-1 rounded-full">
                 {p.rentOrSale}
@@ -215,7 +215,7 @@ export default function PropertyDetails() {
               ))}
             </div>
           </div>
-          <div className="w-full md:w-[32rem] md:max-w-xl items-end">
+          <div className="w-full md:w-[22rem] md:max-w-md items-end mt-6 md:mt-0">
             <div className="bg-white rounded-2xl shadow-md p-4 flex flex-col items-start">
               <img
                 src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
@@ -238,7 +238,7 @@ export default function PropertyDetails() {
 
               <button
                 className="group w-full flex flex-row justify-between mt-2 px-4 py-2 bg-primary text-black rounded-2xl shadow hover:bg-black hover:text-white transition"
-                onClick={() => {}}
+                onClick={() => navigate('/agent/samuel-wright')}
               >
                 <span>View Listings</span>
                 <ChevronRight className="mb-1 group-hover:text-white transition-colors" />
@@ -250,44 +250,36 @@ export default function PropertyDetails() {
           <h2 className="text-sm text-start items-start font-medium">
             Amenities & Features
           </h2>
-          <div className="flex flex-row justify-between gap-16">
-            <div className="mb-2">
-              <h4 className="font-semibold text-sm mb-1">Interior Details</h4>
-              <ul className="list-none text-xs text-gray-700">
+          <div className="flex flex-col md:flex-row justify-between gap-4 md:gap-16 w-full">
+            <div className="mb-2 w-full md:w-1/4 text-left">
+              <h4 className="font-semibold text-base mb-1">Interior Details</h4>
+              <ul className="list-none text-sm text-gray-700">
                 {p.interior.split(",").map((item, idx) => (
-                  <li key={idx} className="text-start py-1">
-                    - {item.trim()}
-                  </li>
+                  <li key={idx} className="text-start py-1">- {item.trim()}</li>
                 ))}
               </ul>
             </div>
-            <div className="mb-2">
-              <h4 className="font-semibold text-sm mb-1">Outdoor Details</h4>
-              <ul className="list-none text-xs text-gray-700">
+            <div className="mb-2 w-full md:w-1/4 text-left">
+              <h4 className="font-semibold text-base mb-1">Outdoor Details</h4>
+              <ul className="list-none text-sm text-gray-700">
                 {p.outdoor.split(",").map((item, idx) => (
-                  <li key={idx} className="text-start py-1">
-                    - {item.trim()}
-                  </li>
+                  <li key={idx} className="text-start py-1">- {item.trim()}</li>
                 ))}
               </ul>
             </div>
-            <div className="mb-2">
-              <h4 className="font-semibold text-sm mb-1">Utilities</h4>
-              <ul className="list-none text-xs text-gray-700">
+            <div className="mb-2 w-full md:w-1/4 text-left">
+              <h4 className="font-semibold text-base mb-1">Utilities</h4>
+              <ul className="list-none text-sm text-gray-700">
                 {p.utilities.split(",").map((item, idx) => (
-                  <li key={idx} className="text-start py-1">
-                    - {item.trim()}
-                  </li>
+                  <li key={idx} className="text-start py-1">- {item.trim()}</li>
                 ))}
               </ul>
             </div>
-            <div className="mb-2">
-              <h4 className="font-semibold text-sm mb-1">Other Features</h4>
-              <ul className="list-none text-xs text-gray-700">
+            <div className="mb-2 w-full md:w-1/4 text-left">
+              <h4 className="font-semibold text-base mb-1">Other Features</h4>
+              <ul className="list-none text-sm text-gray-700">
                 {p.features.split(",").map((item, idx) => (
-                  <li key={idx} className="text-start py-1">
-                    - {item.trim()}
-                  </li>
+                  <li key={idx} className="text-start py-1">- {item.trim()}</li>
                 ))}
               </ul>
             </div>
@@ -309,11 +301,9 @@ export default function PropertyDetails() {
               ></iframe>
             </div>
           </div>
-          <div className="mt-">
-            <h2 className="text-lg font-semibold text-start mb-4">
-              Similar Properties
-            </h2>
-            <div className="flex flex-row gap-8 overflow-x-auto py-4">
+          <div className="mt-8">
+            <h2 className="text-lg font-semibold mb-4 text-center md:text-left">Similar Properties</h2>
+            <div className="flex flex-col sm:flex-row justify-evenly gap-8 overflow-x-auto py-4 items-center">
               {similarProperties.map((prop, idx) => (
                 <div
                   key={prop.id}
