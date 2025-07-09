@@ -29,40 +29,67 @@ export default function AgentProfile() {
     <div className="w-full flex justify-center items-start">
       <div className="max-w-8xl px-4 py-6 sm:px-6 md:px-8 lg:px-10 w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          <div className="flex flex-row gap-4 border-1 border-gray-100 rounded-2xl p-4 items-center">
+          <div className="flex flex-col md:flex-row gap-4 border-1 border-gray-100 rounded-2xl p-4 items-center md:items-start">
             <img
               src={agent.profileImage}
               alt={agent.name}
-              className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-2xl object-cover shadow"
+              className="w-full max-h-72 object-cover rounded-2xl shadow mb-4 md:mb-0"
             />
-            <div className="flex flex-col gap-2 items-start">
-              <h1 className="text-2xl sm:text-3xl mb-1 text-left">{agent.name}</h1>
-              <div className="text-primary font-semibold mb-2 text-left">{agent.company}</div>
+            <div className="flex flex-col justify-between gap-2 items-center md:items-start w-full">
+              <h1 className="text-2xl sm:text-3xl mb-1 text-center md:text-left">
+                {agent.name}
+                <span className="text-sm text-gray-400 p-2">Agent</span>
+              </h1>
+              <div className="text-primary font-semibold mb-2 text-center md:text-left">
+                <span className="text-sm text-gray-400 p-2">
+                  Company Agent at
+                </span>
+                {agent.company}
+              </div>
+              <div className="flex flex-row gap-2 w-full justify-center md:justify-start">
+                <button className="w-full md:w-auto bg-black text-white text-md rounded-full px-4 py-1">
+                  Message
+                </button>
+                <button className="w-full md:w-auto bg-gray-200 text-black text-md rounded-full px-4 py-1">
+                  Call
+                </button>
+              </div>
             </div>
           </div>
           {/* Service Area, Specialities */}
           <div className="flex flex-col border-1 border-gray-100 rounded-2xl p-4 justify-center">
-            <div className="flex items-center gap-2 mb-2">
-              <MapPin className="w-5 h-5 text-primary" />
+            <div className="flex flex-col items-start gap-2 mb-2">
+              <span className="text-sm text-gray-400">Service Areas</span>
               <span>{agent.serviceArea}</span>
             </div>
-            <div className="mb-2 text-left">
-              <span className="font-semibold">Specialities:</span> {agent.specialities}
+            <div className="flex flex-col mb-2 text-left">
+              <span className="text-sm text-gray-400">Specialities</span>
+              <span>{agent.specialities}</span>
             </div>
           </div>
           {/* Office, Bio */}
           <div className="flex flex-col border-1 border-gray-100 rounded-2xl p-4">
-            <div className="mb-2 text-left">
-              <span className="font-semibold">Office:</span> {agent.officeAddress}
-            </div>
-            <div className="mb-2 text-left">
-              <span className="font-semibold">Bio:</span> {agent.about}
+            <div className="flex flex-col mb-2 text-left">
+              <span className="text-md font-medium">Bio</span>
+              <span className="text-sm text-gray-400">{agent.about}</span>
             </div>
           </div>
           {/* Contact */}
           <div className="flex flex-col border-1 border-gray-100 rounded-2xl p-4">
-            <div className="mb-2 text-left">
-              <span className="font-semibold">Contact:</span> {agent.email} | {agent.phone}
+            <div className="flex flex-col mb-2 text-left">
+              <span className="text-lg font-semibold">Contact</span>
+              <div className="flex flex-col mb-2 text-left">
+                <span className="text-sm text-gray-400">Office:</span>
+                <span>{agent.officeAddress}</span>
+              </div>
+              <div className="flex flex-col mb-2 text-left">
+                <span className="text-sm text-gray-400">Phone:</span>
+                <span>{agent.phone}</span>
+              </div>
+              <div className="flex flex-col mb-2 text-left">
+                <span className="text-sm text-gray-400">Email:</span>
+                <span>{agent.email}</span>
+              </div>
             </div>
           </div>
         </div>

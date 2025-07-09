@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const offers = [
   {
@@ -34,6 +35,7 @@ const offers = [
 ];
 
 function Offer() {
+  const navigate = useNavigate();
   return (
     <section className="py-10">
       <div className="mb-8 p-2">
@@ -59,7 +61,8 @@ function Offer() {
                 className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{ pointerEvents: 'auto' }}
               >
-                <span className="bg-primary text-white rounded-full px-6 py-2 font- shadow-lg hover:bg-primary-dark transition">
+                <span className="bg-primary text-white rounded-full px-6 py-2 font- shadow-lg hover:bg-primary-dark transition"
+                onClick={() => {navigate('/search-result')}}>
                   View Property
                 </span>
               </button>
