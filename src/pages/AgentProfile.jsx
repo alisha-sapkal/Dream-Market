@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 const agentData = {
   "samuel-wright": {
@@ -22,6 +23,7 @@ const agentData = {
 export default function AgentProfile() {
   const { agentName } = useParams();
   const agent = agentData[agentName];
+  const [showMessageOptions, setShowMessageOptions] = useState(false);
 
   if (!agent) return <div className="p-8 text-center">Agent not found.</div>;
 
@@ -52,11 +54,41 @@ export default function AgentProfile() {
                 </span>
                 {agent.company}
               </div>
-              <div className="flex flex-row gap-2 w-full justify-center md:justify-start">
-                <button className="w-full md:w-auto bg-black text-white text-md rounded-full px-4 py-1">
-                  Message
-                </button>
-                <button className="w-full md:w-auto bg-gray-200 text-black text-md rounded-full px-4 py-1">
+              <div className="flex flex-row gap-2 w-full justify-center md:justify-start relative">
+                <div className="relative">
+                  <button
+                    className="w-full md:w-auto bg-black text-white text-md rounded-full px-4 py-1 cursor-pointer"
+                    onClick={() => setShowMessageOptions((v) => !v)}
+                    type="button"
+                  >
+                    Message
+                  </button>
+                  {showMessageOptions && (
+                    <div className="absolute left-0 mt-2 w-40 bg-white border border-gray-200 rounded-xl shadow-lg z-10">
+                      <button
+                        className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-black rounded-t-xl"
+                        onClick={() => {
+                          window.location.href = `mailto:${agent.email}`;
+                          setShowMessageOptions(false);
+                        }}
+                      >
+                        Email
+                      </button>
+                      <button
+                        className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-black rounded-b-xl"
+                        onClick={() => {
+                          window.open(`https://wa.me/${agent.phone.replace(/[^\d]/g, '')}`);
+                          setShowMessageOptions(false);
+                        }}
+                      >
+                        WhatsApp
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <button className="w-full md:w-auto bg-gray-200 text-black text-md rounded-full px-4 py-1 cursor-pointer"
+                  onClick={() => window.location.href = `tel:${agent.phone.replace(/[^\d+]/g, '')}`}
+                >
                   Call
                 </button>
               </div>
