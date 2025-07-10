@@ -15,9 +15,8 @@ const agentData = {
       "Property Management, Real Estate Appraising, Real Estate Development",
     serviceArea: "Manchester, Kent, UK",
     officeAddress: "456 Pine Avenue, Suite 700, Kent, UK",
-    listings: [], // You can add property objects here for the agent's listings
+    listings: [],
   },
-  // Add more agents as needed
 };
 
 export default function AgentProfile() {
@@ -94,7 +93,6 @@ export default function AgentProfile() {
               </div>
             </div>
           </motion.div>
-          {/* Service Area, Specialities */}
           <div className="flex flex-col border-1 border-gray-100 rounded-2xl p-4 justify-center">
             <div className="flex flex-col items-start gap-2 mb-2">
               <span className="text-sm text-gray-400">Service Areas</span>
@@ -111,7 +109,6 @@ export default function AgentProfile() {
               <span>{agent.specialities}</span>
             </motion.div>
           </div>
-          {/* Office, Bio */}
           <div className="flex flex-col border-1 border-gray-100 rounded-2xl p-4">
             <motion.div 
               className="flex flex-col mb-2 text-left"
@@ -124,7 +121,6 @@ export default function AgentProfile() {
               <span className="text-sm text-gray-400">{agent.about}</span>
             </motion.div>
           </div>
-          {/* Contact */}
           <div className="flex flex-col border-1 border-gray-100 rounded-2xl p-4">
             <motion.div 
               className="flex flex-col mb-2 text-left"
@@ -149,7 +145,6 @@ export default function AgentProfile() {
             </motion.div>
           </div>
         </div>
-        {/* Listings section can be added here */}
       </div>
     </div>
   );

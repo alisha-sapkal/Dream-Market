@@ -22,7 +22,6 @@ function Info() {
           style={{ borderRadius: 0 }}
         ></iframe>
       </motion.div>
-      {/* Connect Section */}
       <motion.div 
         className="backdrop-blur-md rounded-xl p-0 shadow overflow-hidden"
         initial={{ opacity: 0, x: -40 }}
@@ -51,7 +50,6 @@ function Info() {
               Your trusted real estate partner in every transaction.
             </p>
           </motion.div>
-          {/* Right: Gradient, Form */}
           <motion.div
             className="flex flex-col justify-center px-8 py-8 bg-gradient-to-r from-[#429595] to-[#52B7B7] w-full lg:w-2/5"
             initial={{ opacity: 0, x: 40 }}

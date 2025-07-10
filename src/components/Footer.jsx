@@ -48,7 +48,6 @@ export default function Footer() {
               </Link>
             </div>
           </div>
-          {/* Mobile Sign Up/Login buttons */}
           <div className="flex md:hidden justify-center gap-2 mt-4 mb-2">
             <Link
               to="/signup"

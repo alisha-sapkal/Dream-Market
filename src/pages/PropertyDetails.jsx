@@ -22,7 +22,6 @@ const sampleProperty = {
   bathroom: "2",
   bedroom: "4+",
   size: "6x78.5 m2",
-  // Add these fields:
   image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
   beds: 4,
   baths: 2,
@@ -129,7 +128,6 @@ function updateFavourites(property, liked) {
   window.dispatchEvent(new Event("favouritesUpdated"));
 }
 
-// Copy getInitialLiked and updateFavourites logic for the main property
 function getMainInitialLiked(property) {
   const favs = JSON.parse(localStorage.getItem('favourites') || '[]');
   return favs.some(fav => fav && fav.id === (property.id || property.title));
@@ -177,7 +175,6 @@ export default function PropertyDetails() {
   const p = sampleProperty;
   const navigate = useNavigate();
 
-  // Add state for main property like
   const [mainLiked, setMainLiked] = useState(() => getMainInitialLiked(p));
   const toggleMainLike = () => {
     setMainLiked((prev) => {
