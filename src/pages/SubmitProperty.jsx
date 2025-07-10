@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { motion } from "framer-motion";
 
 const initialState = {
   title: "",
@@ -22,7 +23,7 @@ const initialState = {
   image4: "",
   image5: "",
   map: "",
-  
+
   agentName: "",
   company: "",
   agentEmail: "",
@@ -88,17 +89,32 @@ export default function SubmitProperty() {
           alt="Property Illustration"
           className="w-full max-h-64 object-cover rounded-xl mb-8 shadow"
         />
-        <form
+        <motion.form
           onSubmit={handleSubmit}
           className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
         >
           {/* Property Details */}
           <div className="md:col-span-2">
-            <h3 className="text-xl font-semibold mb-2 text-start">
+            <motion.h3
+              className="text-xl font-semibold mb-2 text-start"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6 }}
+            >
               Property Details
-            </h3>
+            </motion.h3>
           </div>
-          <div className="w-full">
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.01 }}
+          >
             <label
               htmlFor="title"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -114,8 +130,14 @@ export default function SubmitProperty() {
               placeholder="Modern Condo"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.02 }}
+          >
             <label
               htmlFor="price"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -131,8 +153,14 @@ export default function SubmitProperty() {
               placeholder="$350000"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.03 }}
+          >
             <label
               htmlFor="type"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -154,8 +182,14 @@ export default function SubmitProperty() {
                 </option>
               ))}
             </select>
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.04 }}
+          >
             <label
               htmlFor="address"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -171,8 +205,14 @@ export default function SubmitProperty() {
               placeholder="29, Pine Avenue, Kent, UK"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+          >
             <label
               htmlFor="location"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -194,8 +234,14 @@ export default function SubmitProperty() {
                 </option>
               ))}
             </select>
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.06 }}
+          >
             <label
               htmlFor="bathroom"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -217,8 +263,14 @@ export default function SubmitProperty() {
                 </option>
               ))}
             </select>
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.07 }}
+          >
             <label
               htmlFor="bedroom"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -240,8 +292,14 @@ export default function SubmitProperty() {
                 </option>
               ))}
             </select>
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.08 }}
+          >
             <label
               htmlFor="interior"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -256,8 +314,14 @@ export default function SubmitProperty() {
               placeholder="Equipped kitchen"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.09 }}
+          >
             <label
               htmlFor="size"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -272,8 +336,14 @@ export default function SubmitProperty() {
               placeholder="6x78.5 m2"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
             <label
               htmlFor="utilities"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -288,8 +358,14 @@ export default function SubmitProperty() {
               placeholder="Central Air"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.11 }}
+          >
             <label
               htmlFor="outdoor"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -304,8 +380,14 @@ export default function SubmitProperty() {
               placeholder="Backyard"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.12 }}
+          >
             <label
               htmlFor="description"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -321,8 +403,14 @@ export default function SubmitProperty() {
               placeholder="Property Description"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.13 }}
+          >
             <label
               htmlFor="features"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -337,8 +425,14 @@ export default function SubmitProperty() {
               placeholder="Chair Accessible"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.14 }}
+          >
             <label
               htmlFor="youtube"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -353,8 +447,14 @@ export default function SubmitProperty() {
               placeholder="e.g. Youtube link"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+          >
             <label
               htmlFor="image1"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -370,8 +470,14 @@ export default function SubmitProperty() {
               placeholder="e.g. google drive link"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.16 }}
+          >
             <label
               htmlFor="image2"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -387,8 +493,14 @@ export default function SubmitProperty() {
               placeholder="e.g. google drive link"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.17 }}
+          >
             <label
               htmlFor="image3"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -404,8 +516,14 @@ export default function SubmitProperty() {
               placeholder="e.g. google drive link"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.18 }}
+          >
             <label
               htmlFor="image4"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -421,8 +539,14 @@ export default function SubmitProperty() {
               placeholder="e.g. google drive link"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.19 }}
+          >
             <label
               htmlFor="image5"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -437,8 +561,14 @@ export default function SubmitProperty() {
               placeholder="e.g. google drive link"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <label
               htmlFor="map"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -454,15 +584,27 @@ export default function SubmitProperty() {
               placeholder="Enter map coordinates"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
+          </motion.div>
 
           {/* Agent Details */}
           <div className="md:col-span-2">
-            <h3 className="text-xl font-semibold text-start mb-2">
+            <motion.h3
+              className="text-xl font-semibold text-start mb-2"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6 }}
+            >
               Agent Details
-            </h3>
+            </motion.h3>
           </div>
-          <div className="w-full">
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.21 }}
+          >
             <label
               htmlFor="agentName"
               className="block mb-1 text-gray-700 text-left text-sm"
@@ -475,12 +617,17 @@ export default function SubmitProperty() {
               value={form.agentName}
               onChange={handleChange}
               required
-              placeholder="Samuel Wright
-"
+              placeholder="Samuel Wright"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.22 }}
+          >
             <label
               htmlFor="company"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -493,12 +640,17 @@ export default function SubmitProperty() {
               value={form.company}
               onChange={handleChange}
               required
-              placeholder="Everegreen Estates
-"
+              placeholder="Everegreen Estates"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.23 }}
+          >
             <label
               htmlFor="agentEmail"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -511,13 +663,17 @@ export default function SubmitProperty() {
               value={form.agentEmail}
               onChange={handleChange}
               required
-              placeholder="
-samuel.wright@evergreenestates.com
-"
+              placeholder="samuel.wright@evergreenestates.com"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.24 }}
+          >
             <label
               htmlFor="messageLink"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -530,20 +686,63 @@ samuel.wright@evergreenestates.com
               value={form.messageLink}
               onChange={handleChange}
               required
-              placeholder="mailto:samuel.wright@evergreenestates.com
-"
+              placeholder="mailto:samuel.wright@evergreenestates.com"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
-            <label htmlFor="about" className="block mb-1 font-medium text-gray-700 text-left text-sm">About*</label>
-            <textarea id="about" name="about" value={form.about} onChange={handleChange} required placeholder="Samuel Wright's expertise in Property Management, Real Estate Appraising, and Real Estate Development allows him to offer comprehensive services to his clients. His analytical skills and proactive approach ensure that every project is executed flawlessly." className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs" />
-          </div>
-          <div className="w-full">
-            <label htmlFor="specialities" className="block mb-1 font-medium text-gray-700 text-left text-sm">Specialities*</label>
-            <input id="specialities" name="specialities" value={form.specialities} onChange={handleChange} required placeholder="Property Management, Real Estate Appraising, Real Estate Development" className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs" />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+          >
+            <label
+              htmlFor="about"
+              className="block mb-1 font-medium text-gray-700 text-left text-sm"
+            >
+              About*
+            </label>
+            <textarea
+              id="about"
+              name="about"
+              value={form.about}
+              onChange={handleChange}
+              required
+              placeholder="Samuel Wright's expertise in Property Management, Real Estate Appraising, and Real Estate Development allows him to offer comprehensive services to his clients. His analytical skills and proactive approach ensure that every project is executed flawlessly."
+              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
+            />
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.26 }}
+          >
+            <label
+              htmlFor="specialities"
+              className="block mb-1 font-medium text-gray-700 text-left text-sm"
+            >
+              Specialities*
+            </label>
+            <input
+              id="specialities"
+              name="specialities"
+              value={form.specialities}
+              onChange={handleChange}
+              required
+              placeholder="Property Management, Real Estate Appraising, Real Estate Development"
+              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
+            />
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.27 }}
+          >
             <label
               htmlFor="serviceArea"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -556,12 +755,17 @@ samuel.wright@evergreenestates.com
               value={form.serviceArea}
               onChange={handleChange}
               required
-              placeholder="Manchester, Kent, UK
-"
+              placeholder="Manchester, Kent, UK"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.28 }}
+          >
             <label
               htmlFor="officeAddress"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -574,12 +778,17 @@ samuel.wright@evergreenestates.com
               value={form.officeAddress}
               onChange={handleChange}
               required
-              placeholder="456 Pine Avenue, Suite 700, Kent, UK
-"
+              placeholder="456 Pine Avenue, Suite 700, Kent, UK"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.29 }}
+          >
             <label
               htmlFor="phone"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -592,12 +801,17 @@ samuel.wright@evergreenestates.com
               value={form.phone}
               onChange={handleChange}
               required
-              placeholder="(111) 123-4567
-"
+              placeholder="(111) 123-4567"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
             <label
               htmlFor="callLink"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -610,12 +824,17 @@ samuel.wright@evergreenestates.com
               value={form.callLink}
               onChange={handleChange}
               required
-              placeholder="tel:+1111234567
-"
+              placeholder="tel:+1111234567"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.31 }}
+          >
             <label
               htmlFor="thumbnail"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -628,12 +847,17 @@ samuel.wright@evergreenestates.com
               value={form.thumbnail}
               onChange={handleChange}
               required
-              placeholder="e.g. google drive link
-"
+              placeholder="e.g. google drive link"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
-          <div className="w-full">
+          </motion.div>
+          <motion.div
+            className="w-full"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.32 }}
+          >
             <label
               htmlFor="profileImage"
               className="block mb-1 font-medium text-gray-700 text-left text-sm"
@@ -646,20 +870,23 @@ samuel.wright@evergreenestates.com
               value={form.profileImage}
               onChange={handleChange}
               required
-              placeholder="e.g. google drive link
-"
+              placeholder="e.g. google drive link"
               className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
             />
-          </div>
+          </motion.div>
 
-          <button
+          <motion.button
             type="submit"
             disabled={loading}
             className="md:col-span-2 w-full py-3 bg-black text-white rounded-lg text-xl transition-colors mt-4 disabled:opacity-60"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
           >
             {loading ? "Submitting..." : "Submit"}
-          </button>
-        </form>
+          </motion.button>
+        </motion.form>
       </div>
       <style>{`
         .input {

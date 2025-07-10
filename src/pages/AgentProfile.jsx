@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { MapPin } from "lucide-react";
+import { motion } from 'framer-motion';
 
 const agentData = {
   "samuel-wright": {
@@ -29,7 +29,13 @@ export default function AgentProfile() {
     <div className="w-full flex justify-center items-start">
       <div className="max-w-8xl px-4 py-6 sm:px-6 md:px-8 lg:px-10 w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          <div className="flex flex-col md:flex-row gap-4 border-1 border-gray-100 rounded-2xl p-4 items-center md:items-start">
+          <motion.div 
+            className="flex flex-col md:flex-row gap-4 border-1 border-gray-100 rounded-2xl p-4 items-center md:items-start"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7 }}
+          >
             <img
               src={agent.profileImage}
               alt={agent.name}
@@ -55,28 +61,46 @@ export default function AgentProfile() {
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
           {/* Service Area, Specialities */}
           <div className="flex flex-col border-1 border-gray-100 rounded-2xl p-4 justify-center">
             <div className="flex flex-col items-start gap-2 mb-2">
               <span className="text-sm text-gray-400">Service Areas</span>
               <span>{agent.serviceArea}</span>
             </div>
-            <div className="flex flex-col mb-2 text-left">
+            <motion.div 
+              className="flex flex-col mb-2 text-left"
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
               <span className="text-sm text-gray-400">Specialities</span>
               <span>{agent.specialities}</span>
-            </div>
+            </motion.div>
           </div>
           {/* Office, Bio */}
           <div className="flex flex-col border-1 border-gray-100 rounded-2xl p-4">
-            <div className="flex flex-col mb-2 text-left">
+            <motion.div 
+              className="flex flex-col mb-2 text-left"
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+            >
               <span className="text-md font-medium">Bio</span>
               <span className="text-sm text-gray-400">{agent.about}</span>
-            </div>
+            </motion.div>
           </div>
           {/* Contact */}
           <div className="flex flex-col border-1 border-gray-100 rounded-2xl p-4">
-            <div className="flex flex-col mb-2 text-left">
+            <motion.div 
+              className="flex flex-col mb-2 text-left"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+            >
               <span className="text-lg font-semibold">Contact</span>
               <div className="flex flex-col mb-2 text-left">
                 <span className="text-sm text-gray-400">Office:</span>
@@ -90,7 +114,7 @@ export default function AgentProfile() {
                 <span className="text-sm text-gray-400">Email:</span>
                 <span>{agent.email}</span>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
         {/* Listings section can be added here */}

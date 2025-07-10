@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BedDouble, Bath, RulerDimensionLine, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 function removeFromFavourites(propertyId) {
   let favs = JSON.parse(localStorage.getItem('favourites') || '[]');
@@ -26,7 +27,8 @@ export default function Favourite() {
   localStorage.setItem('favourites', JSON.stringify(favs.filter(fav => fav && fav.image)));
 
   return (
-    <section className="py-10 px-4 max-w-6xl mx-auto">
+    <section className="py-10 px-4 max-w-6xl">
+      <motion.h1 className='text-4xl font-semibold w-full text-start mb-8 px-8'>Favourite</motion.h1>
       {favourites.length === 0 ? (
         <div className="flex flex-col items-center justify-center">
           <div className="bg-white/80 rounded-2xl shadow p-8 flex flex-col items-center max-w-md w-full">
