@@ -24,18 +24,18 @@ const initialState = {
   image5: "",
   map: "",
 
-  agentName: "",
-  company: "",
-  agentEmail: "",
-  messageLink: "",
-  about: "",
-  specialities: "",
-  serviceArea: "",
-  officeAddress: "",
-  phone: "",
-  callLink: "",
-  thumbnail: "",
-  profileImage: "",
+  //agent
+  first_name:"",
+  last_name:"",
+  email:"",
+  username:"",
+  phone_number:"",
+  password:"",
+  aadhaar_number:"",
+  pan_number:"",
+  aadhaar_card:"",
+  pan_card:"",
+  profile_picture:"",
 };
 
 const propertyTypes = ["Rent", "Sale", "Commercial", "Land", "Lease"];
@@ -52,14 +52,91 @@ const numbers = ["1", "2", "3", "4+"];
 export default function SubmitProperty() {
   const [form, setForm] = useState(initialState);
   const [loading, setLoading] = useState(false);
+  const [fileErrors, setFileErrors] = useState({ aadhaar_card: '', pan_card: '', profile_picture: '' });
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [otpLoading, setOtpLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+ 
+  const handleFileChange = async (e) => {
+    const { name, files } = e.target;
+    const file = files[0];
+    if (!file) return;
+    if (file.size > 102400) { 
+      setFileErrors((prev) => ({ ...prev, [name]: 'File size must be less than 100KB' }));
+      setForm((prev) => ({ ...prev, [name]: '' }));
+      return;
+    }
+    setFileErrors((prev) => ({ ...prev, [name]: '' }));
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setForm((prev) => ({ ...prev, [name]: reader.result }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const sendOtp = async () => {
+    setOtpLoading(true);
+    try {
+      const res = await fetch(`/api/buyer/buyer-verify-email/${form.email}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to send OTP");
+      toast.success("OTP sent to your email!");
+      setOtpSent(true);
+    } catch (err) {
+      toast.error(err.message || "Failed to send OTP");
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
+  // Add resendOtp function
+  const resendOtp = async () => {
+    setOtpLoading(true);
+    try {
+      const res = await fetch(`/api/buyer/resend-otp/${form.email}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to resend OTP");
+      toast.success("OTP resent to your email!");
+    } catch (err) {
+      toast.error(err.message || "Failed to resend OTP");
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
+  const verifyOtp = async () => {
+    setOtpLoading(true);
+    try {
+      const res = await fetch(`/api/verify-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: form.email, otp }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "OTP verification failed");
+      toast.success("Email verified!");
+      setOtpVerified(true);
+    } catch (err) {
+      toast.error(err.message || "OTP verification failed");
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    if (!otpVerified) {
+      toast.error("Please verify your email with OTP before submitting.");
+      setLoading(false);
+      return;
+    }
     try {
       const res = await fetch("/api/submit-property", {
         method: "POST",
@@ -70,6 +147,9 @@ export default function SubmitProperty() {
       if (!res.ok) throw new Error(data.message || "Submission failed");
       toast.success("Property submitted successfully!");
       setForm(initialState);
+      setOtpSent(false);
+      setOtp("");
+      setOtpVerified(false);
     } catch (err) {
       toast.error(err.message || "Submission failed. Please try again.");
     } finally {
@@ -598,281 +678,100 @@ export default function SubmitProperty() {
               Agent Details
             </motion.h3>
           </div>
-          <motion.div
-            className="w-full"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.21 }}
-          >
-            <label
-              htmlFor="agentName"
-              className="block mb-1 text-gray-700 text-left text-sm"
-            >
-              Name*
-            </label>
-            <input
-              id="agentName"
-              name="agentName"
-              value={form.agentName}
-              onChange={handleChange}
-              required
-              placeholder="Samuel Wright"
-              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
-            />
+          <motion.div className="w-full" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.21 }}>
+            <label htmlFor="first_name" className="block mb-1 text-gray-700 text-left text-sm">First Name*</label>
+            <input id="first_name" name="first_name" value={form.first_name} onChange={handleChange} required placeholder="First Name" className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs" />
           </motion.div>
-          <motion.div
-            className="w-full"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.22 }}
-          >
-            <label
-              htmlFor="company"
-              className="block mb-1 font-medium text-gray-700 text-left text-sm"
-            >
-              Company Name*
-            </label>
-            <input
-              id="company"
-              name="company"
-              value={form.company}
-              onChange={handleChange}
-              required
-              placeholder="Everegreen Estates"
-              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
-            />
+          <motion.div className="w-full" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.22 }}>
+            <label htmlFor="last_name" className="block mb-1 text-gray-700 text-left text-sm">Last Name*</label>
+            <input id="last_name" name="last_name" value={form.last_name} onChange={handleChange} required placeholder="Last Name" className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs" />
           </motion.div>
-          <motion.div
-            className="w-full"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.23 }}
-          >
-            <label
-              htmlFor="agentEmail"
-              className="block mb-1 font-medium text-gray-700 text-left text-sm"
-            >
-              Email*
-            </label>
-            <input
-              id="agentEmail"
-              name="agentEmail"
-              value={form.agentEmail}
-              onChange={handleChange}
-              required
-              placeholder="samuel.wright@evergreenestates.com"
-              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
-            />
+          <motion.div className="w-full" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.23 }}>
+            <label htmlFor="email" className="block mb-1 text-gray-700 text-left text-sm">Email*</label>
+            <div className="flex gap-2">
+              <input
+                id="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                placeholder="Email"
+                className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
+                disabled={otpVerified}
+              />
+              <button
+                type="button"
+                onClick={sendOtp}
+                disabled={!form.email || otpSent || otpLoading}
+                className="bg-black text-white px-3 py-1 rounded"
+              >
+                {otpLoading ? "Sending..." : otpSent ? "Sent" : "Send OTP"}
+              </button>
+            </div>
+            {otpSent && !otpVerified && (
+              <div className="flex gap-2 mt-2 items-center">
+                <input
+                  type="text"
+                  value={otp}
+                  onChange={e => setOtp(e.target.value)}
+                  placeholder="Enter OTP"
+                  className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
+                />
+                <button
+                  type="button"
+                  onClick={verifyOtp}
+                  disabled={otpLoading || !otp}
+                  className="bg-green-600 text-white px-3 py-1 rounded"
+                >
+                  {otpLoading ? "Verifying..." : "Verify OTP"}
+                </button>
+                <button
+                  type="button"
+                  onClick={resendOtp}
+                  disabled={otpLoading}
+                  className="bg-blue-600 text-white px-3 py-1 rounded"
+                  style={{ minWidth: 90 }}
+                >
+                  {otpLoading ? "Resending..." : "Resend OTP"}
+                </button>
+              </div>
+            )}
+            {otpVerified && <span className="text-green-600 text-xs">Email verified!</span>}
           </motion.div>
-          <motion.div
-            className="w-full"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.24 }}
-          >
-            <label
-              htmlFor="messageLink"
-              className="block mb-1 font-medium text-gray-700 text-left text-sm"
-            >
-              Message Link*
-            </label>
-            <input
-              id="messageLink"
-              name="messageLink"
-              value={form.messageLink}
-              onChange={handleChange}
-              required
-              placeholder="mailto:samuel.wright@evergreenestates.com"
-              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
-            />
+          <motion.div className="w-full" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.24 }}>
+            <label htmlFor="username" className="block mb-1 text-gray-700 text-left text-sm">Username*</label>
+            <input id="username" name="username" value={form.username} onChange={handleChange} required placeholder="Username" className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs" />
           </motion.div>
-          <motion.div
-            className="w-full"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-          >
-            <label
-              htmlFor="about"
-              className="block mb-1 font-medium text-gray-700 text-left text-sm"
-            >
-              About*
-            </label>
-            <textarea
-              id="about"
-              name="about"
-              value={form.about}
-              onChange={handleChange}
-              required
-              placeholder="Samuel Wright's expertise in Property Management, Real Estate Appraising, and Real Estate Development allows him to offer comprehensive services to his clients. His analytical skills and proactive approach ensure that every project is executed flawlessly."
-              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
-            />
+          <motion.div className="w-full" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.25 }}>
+            <label htmlFor="phone_number" className="block mb-1 text-gray-700 text-left text-sm">Phone Number*</label>
+            <input id="phone_number" name="phone_number" value={form.phone_number} onChange={handleChange} required placeholder="Phone Number" className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs" />
           </motion.div>
-          <motion.div
-            className="w-full"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.26 }}
-          >
-            <label
-              htmlFor="specialities"
-              className="block mb-1 font-medium text-gray-700 text-left text-sm"
-            >
-              Specialities*
-            </label>
-            <input
-              id="specialities"
-              name="specialities"
-              value={form.specialities}
-              onChange={handleChange}
-              required
-              placeholder="Property Management, Real Estate Appraising, Real Estate Development"
-              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
-            />
+          <motion.div className="w-full" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.26 }}>
+            <label htmlFor="password" className="block mb-1 text-gray-700 text-left text-sm">Password*</label>
+            <input id="password" name="password" type="password" value={form.password} onChange={handleChange} required placeholder="Password" className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs" />
           </motion.div>
-          <motion.div
-            className="w-full"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.27 }}
-          >
-            <label
-              htmlFor="serviceArea"
-              className="block mb-1 font-medium text-gray-700 text-left text-sm"
-            >
-              Service Area*
-            </label>
-            <input
-              id="serviceArea"
-              name="serviceArea"
-              value={form.serviceArea}
-              onChange={handleChange}
-              required
-              placeholder="Manchester, Kent, UK"
-              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
-            />
+          <motion.div className="w-full" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.27 }}>
+            <label htmlFor="aadhaar_number" className="block mb-1 text-gray-700 text-left text-sm">Aadhaar Number*</label>
+            <input id="aadhaar_number" name="aadhaar_number" value={form.aadhaar_number} onChange={handleChange} required placeholder="Aadhaar Number" className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs" />
           </motion.div>
-          <motion.div
-            className="w-full"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.28 }}
-          >
-            <label
-              htmlFor="officeAddress"
-              className="block mb-1 font-medium text-gray-700 text-left text-sm"
-            >
-              Office Address*
-            </label>
-            <input
-              id="officeAddress"
-              name="officeAddress"
-              value={form.officeAddress}
-              onChange={handleChange}
-              required
-              placeholder="456 Pine Avenue, Suite 700, Kent, UK"
-              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
-            />
+          <motion.div className="w-full" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.28 }}>
+            <label htmlFor="pan_number" className="block mb-1 text-gray-700 text-left text-sm">PAN Number*</label>
+            <input id="pan_number" name="pan_number" value={form.pan_number} onChange={handleChange} required placeholder="PAN Number" className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs" />
           </motion.div>
-          <motion.div
-            className="w-full"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.29 }}
-          >
-            <label
-              htmlFor="phone"
-              className="block mb-1 font-medium text-gray-700 text-left text-sm"
-            >
-              Phone Number*
-            </label>
-            <input
-              id="phone"
-              name="phone"
-              value={form.phone}
-              onChange={handleChange}
-              required
-              placeholder="(111) 123-4567"
-              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
-            />
+          <motion.div className="w-full" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.29 }}>
+            <label htmlFor="aadhaar_card" className="block mb-1 text-gray-700 text-left text-sm">Aadhaar Card (Image Upload, max 100KB)</label>
+            <input id="aadhaar_card" name="aadhaar_card" type="file" accept="image/*" onChange={handleFileChange} className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs" />
+            {fileErrors.aadhaar_card && <span className="text-red-500 text-xs">{fileErrors.aadhaar_card}</span>}
           </motion.div>
-          <motion.div
-            className="w-full"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <label
-              htmlFor="callLink"
-              className="block mb-1 font-medium text-gray-700 text-left text-sm"
-            >
-              Call Link*
-            </label>
-            <input
-              id="callLink"
-              name="callLink"
-              value={form.callLink}
-              onChange={handleChange}
-              required
-              placeholder="tel:+1111234567"
-              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
-            />
+          <motion.div className="w-full" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.3 }}>
+            <label htmlFor="pan_card" className="block mb-1 text-gray-700 text-left text-sm">PAN Card (Image Upload, max 100KB)</label>
+            <input id="pan_card" name="pan_card" type="file" accept="image/*" onChange={handleFileChange} className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs" />
+            {fileErrors.pan_card && <span className="text-red-500 text-xs">{fileErrors.pan_card}</span>}
           </motion.div>
-          <motion.div
-            className="w-full"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.31 }}
-          >
-            <label
-              htmlFor="thumbnail"
-              className="block mb-1 font-medium text-gray-700 text-left text-sm"
-            >
-              Thumbnail*
-            </label>
-            <input
-              id="thumbnail"
-              name="thumbnail"
-              value={form.thumbnail}
-              onChange={handleChange}
-              required
-              placeholder="e.g. google drive link"
-              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
-            />
-          </motion.div>
-          <motion.div
-            className="w-full"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.32 }}
-          >
-            <label
-              htmlFor="profileImage"
-              className="block mb-1 font-medium text-gray-700 text-left text-sm"
-            >
-              Profile Image*
-            </label>
-            <input
-              id="profileImage"
-              name="profileImage"
-              value={form.profileImage}
-              onChange={handleChange}
-              required
-              placeholder="e.g. google drive link"
-              className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs"
-            />
+          <motion.div className="w-full" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.31 }}>
+            <label htmlFor="profile_picture" className="block mb-1 text-gray-700 text-left text-sm">Profile Picture (Image Upload, max 100KB)</label>
+            <input id="profile_picture" name="profile_picture" type="file" accept="image/*" onChange={handleFileChange} className="input border border-gray-200 rounded-xl p-2 text-left w-full text-xs" />
+            {fileErrors.profile_picture && <span className="text-red-500 text-xs">{fileErrors.profile_picture}</span>}
           </motion.div>
 
           <motion.button

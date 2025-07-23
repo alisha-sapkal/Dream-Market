@@ -26,8 +26,7 @@ export default function SignIn() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Login failed');
-      localStorage.setItem('user', JSON.stringify(data.user));
-      window.dispatchEvent(new Event('storage'));
+      // The backend should set an HTTP-only cookie for authentication.
       toast.success('Login successful!');
       setTimeout(() => navigate('/'), 1200);
     } catch (err) {

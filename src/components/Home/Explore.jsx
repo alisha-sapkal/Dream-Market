@@ -132,16 +132,16 @@ function Explore() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
         >
-          Explore & Find your Dream home
-        </motion.h2>
+            Explore & Find your Dream home
+          </motion.h2>
         <motion.p
           className="text-gray-700 text-start mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.35, ease: "easeOut" }}
         >
-          We help you find your place, invest and build wealth in United
-          Kingdom.
+            We help you find your place, invest and build wealth in United
+            Kingdom.
         </motion.p>
         <motion.div
           className="flex flex-row gap-8 mb-4 border-2 border-gray-50 rounded-2xl text-center p-4"
@@ -149,13 +149,13 @@ function Explore() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.45, ease: "easeOut" }}
         >
-          <div className="flex flex-col items-start">
-            <span className="text-3xl sm:text-4xl font-semibold text-primary">$200M+</span>
-            <span className="text-gray-600 text-sm font-medium">Property in Real Estate</span>
-          </div>
-          <div className="flex flex-col items-start">
-            <span className="text-3xl sm:text-4xl font-semibold text-primary">100+</span>
-            <span className="text-gray-600 text-sm font-medium">Happy Customers</span>
+            <div className="flex flex-col items-start">
+              <span className="text-3xl sm:text-4xl font-semibold text-primary">$200M+</span>
+              <span className="text-gray-600 text-sm font-medium">Property in Real Estate</span>
+            </div>
+            <div className="flex flex-col items-start">
+              <span className="text-3xl sm:text-4xl font-semibold text-primary">100+</span>
+              <span className="text-gray-600 text-sm font-medium">Happy Customers</span>
           </div>
         </motion.div>
       </motion.div>
@@ -167,10 +167,10 @@ function Explore() {
         animate="visible"
       >
         <AnimatePresence>
-          {listings.map((listing, idx) => (
-            <motion.div
-              key={idx}
-              className="group rounded-2xl bg-white/30 backdrop-blur-md shadow-lg overflow-hidden flex flex-col transition-transform duration-300 min-w-[320px] w-[350px]"
+        {listings.map((listing, idx) => (
+          <motion.div
+            key={idx}
+            className="group rounded-2xl bg-white/30 backdrop-blur-md shadow-lg overflow-hidden flex flex-col transition-transform duration-300 min-w-[320px] w-[350px]"
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
@@ -179,38 +179,38 @@ function Explore() {
               transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
               exit={{ opacity: 0, y: 40, transition: { duration: 0.3 } }}
               layout
-            >
+          >
               <motion.div className="relative" layout>
                 <motion.img
-                  src={listing.image}
-                  alt={listing.title}
-                  className="h-56 w-full object-cover rounded-2xl transition-transform duration-300 group-hover:scale-105"
-                  loading="lazy"
+                src={listing.image}
+                alt={listing.title}
+                className="h-56 w-full object-cover rounded-2xl transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
                   initial={{ scale: 1.05, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.6, delay: 0.1 * idx, ease: "easeOut" }}
-                />
+              />
                 <motion.div className="absolute top-4 left-4 flex gap-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + idx * 0.1, duration: 0.4 }}>
-                  <span className="bg-primary text-white text-xs font-semibold uppercase rounded-full px-3 py-1 shadow">
-                    {listing.type}
-                  </span>
-                  <span className="bg-primary text-white text-xs font-semibold uppercase rounded-full px-3 py-1 shadow">
-                    {listing.category}
-                  </span>
+                <span className="bg-primary text-white text-xs font-semibold uppercase rounded-full px-3 py-1 shadow">
+                  {listing.type}
+                </span>
+                <span className="bg-primary text-white text-xs font-semibold uppercase rounded-full px-3 py-1 shadow">
+                  {listing.category}
+                </span>
                 </motion.div>
                 <motion.div className="absolute top-3 right-3" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 + idx * 0.1, duration: 0.3 }}>
-                  <div className="bg-white/40 backdrop-blur-xs rounded-full p-2 shadow flex items-center justify-center">
-                    <Heart
-                      className={`w-6 h-6 cursor-pointer transition-colors ${liked[idx] ? 'fill-red-500 text-red-500' : 'fill-none text-gray-300'}`}
-                      strokeWidth={2.5}
-                      onClick={() => toggleLike(idx)}
-                      fill={liked[idx] ? '#ef4444' : 'none'}
-                    />
-                  </div>
+                <div className="bg-white/40 backdrop-blur-xs rounded-full p-2 shadow flex items-center justify-center">
+                  <Heart
+                    className={`w-6 h-6 cursor-pointer transition-colors ${liked[idx] ? 'fill-red-500 text-red-500' : 'fill-none text-gray-300'}`}
+                    strokeWidth={2.5}
+                    onClick={() => toggleLike(idx)}
+                    fill={liked[idx] ? '#ef4444' : 'none'}
+                  />
+                </div>
                 </motion.div>
               </motion.div>
               <motion.div className="flex justify-around mt-2 items-center" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 + idx * 0.1, duration: 0.3 }}>
-                <div className="flex items-center gap-1 mr-auto border-1 border-gray-200 rounded-full p-1 cursor-pointer hover:bg-gray-100 transition"
+              <div className="flex items-center gap-1 mr-auto border-1 border-gray-200 rounded-full p-1 cursor-pointer hover:bg-gray-100 transition"
                   onClick={() => {
                     // TODO: Fetch property details from backend using the property title or ID here.
                     // Example:
@@ -220,26 +220,26 @@ function Explore() {
                     // For now, just navigate as before:
                     navigate(`/property-details/${encodeURIComponent(listing.title.toLowerCase().replace(/\s+/g, '-') )}`);
                   }}>
-                  <img src={listing.image} alt="thumb" className="w-4 h-4 rounded-full object-cover" />
-                  <span className="text-sm text-gray-500 font-medium">+4 Images</span>
-                </div>
-                <span className="text-primary text-md font-semibold uppercase px-3 py-1">
-                  {listing.price}
-                </span>
+                <img src={listing.image} alt="thumb" className="w-4 h-4 rounded-full object-cover" />
+                <span className="text-sm text-gray-500 font-medium">+4 Images</span>
+              </div>
+              <span className="text-primary text-md font-semibold uppercase px-3 py-1">
+                {listing.price}
+              </span>
               </motion.div>
               <motion.div className="flex-1 flex flex-col p-4" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + idx * 0.1, duration: 0.3 }}>
-                <h3 className="text-lg font-bold mb-1 text-gray-900">
-                  {listing.title}
-                </h3>
-                <p className="text-gray-700 text-sm mb-2">{listing.address}</p>
-                <div className="flex items-center gap-4 text-gray-600 text-xs mb-4">
-                  <span className="flex items-center"><BedDouble className="w-5 h-5 mr-1 text-primary" />{listing.beds}</span>
-                  <span className="flex items-center"><Bath className="w-5 h-5 mr-1 text-primary" />{listing.baths}</span>
-                  <span className="flex items-center"><RulerDimensionLine className="w-5 h-5 mr-1 text-primary" />{listing.area}</span>
-                </div>
+              <h3 className="text-lg font-bold mb-1 text-gray-900">
+                {listing.title}
+              </h3>
+              <p className="text-gray-700 text-sm mb-2">{listing.address}</p>
+              <div className="flex items-center gap-4 text-gray-600 text-xs mb-4">
+                <span className="flex items-center"><BedDouble className="w-5 h-5 mr-1 text-primary" />{listing.beds}</span>
+                <span className="flex items-center"><Bath className="w-5 h-5 mr-1 text-primary" />{listing.baths}</span>
+                <span className="flex items-center"><RulerDimensionLine className="w-5 h-5 mr-1 text-primary" />{listing.area}</span>
+              </div>
               </motion.div>
-            </motion.div>
-          ))}
+          </motion.div>
+        ))}
         </AnimatePresence>
       </motion.div>
     </motion.section>

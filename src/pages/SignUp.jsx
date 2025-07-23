@@ -4,12 +4,30 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function SignUp() {
-  const [form, setForm] = useState({ email: "", password: "", confirm: "" });
+  const [form, setForm] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone_number: "",
+    password: "",
+    confirm: "",
+    username: "",
+    aadhaar_number: "",
+    pan_number: "",
+    aadhaar_card: null,
+    pan_card: null,
+    profile_picture: null,
+  });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value, files } = e.target;
+    if (files) {
+      setForm({ ...form, [name]: files[0] });
+    } else {
+      setForm({ ...form, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -21,10 +39,21 @@ export default function SignUp() {
     }
     setError("");
     try {
-      const res = await fetch("/api/signup", {
+      const fd = new FormData();
+      fd.append("first_name", form.first_name);
+      fd.append("last_name", form.last_name);
+      fd.append("email", form.email);
+      fd.append("phone_number", form.phone_number);
+      fd.append("password", form.password);
+      fd.append("username", form.username);
+      fd.append("aadhaar_number", form.aadhaar_number);
+      fd.append("pan_number", form.pan_number);
+      if (form.aadhaar_card) fd.append("aadhaar_card", form.aadhaar_card);
+      if (form.pan_card) fd.append("pan_card", form.pan_card);
+      if (form.profile_picture) fd.append("profile_picture", form.profile_picture);
+      const res = await fetch("/api/buyer/add-buyer", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: form.email, password: form.password })
+        body: fd,
       });
       const data = await res.json();
       if (!res.ok) {
@@ -55,40 +84,20 @@ export default function SignUp() {
             Sign up
           </h2>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={form.email}
-              onChange={handleChange}
-              required
-              className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80"
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
-              required
-              className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80"
-            />
-            <input
-              type="password"
-              name="confirm"
-              placeholder="Confirm Password"
-              value={form.confirm}
-              onChange={handleChange}
-              required
-              className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80"
-            />
+            <input type="text" name="first_name" placeholder="First Name" value={form.first_name} onChange={handleChange} required className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80" />
+            <input type="text" name="last_name" placeholder="Last Name" value={form.last_name} onChange={handleChange} required className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80" />
+            <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} required className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80" />
+            <input type="text" name="phone_number" placeholder="Phone Number" value={form.phone_number} onChange={handleChange} required className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80" />
+            <input type="text" name="username" placeholder="Username" value={form.username} onChange={handleChange} required className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80" />
+            <input type="text" name="aadhaar_number" placeholder="Aadhaar Number" value={form.aadhaar_number} onChange={handleChange} required className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80" />
+            <input type="text" name="pan_number" placeholder="PAN Number" value={form.pan_number} onChange={handleChange} required className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80" />
+            <input type="file" name="aadhaar_card" accept="image/*" onChange={handleChange} className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80" />
+            <input type="file" name="pan_card" accept="image/*" onChange={handleChange} className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80" />
+            <input type="file" name="profile_picture" accept="image/*" onChange={handleChange} className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80" />
+            <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange} required className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80" />
+            <input type="password" name="confirm" placeholder="Confirm Password" value={form.confirm} onChange={handleChange} required className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-white/80" />
             {error && <div className="text-red-500 text-xs mb-2">{error}</div>}
-            <button
-              type="submit"
-              className="w-full py-3 bg-black text-white rounded-lg font-bold text-lg transition-colors"
-            >
-              Sign Up
-            </button>
+            <button type="submit" className="w-full py-3 bg-black text-white rounded-lg font-bold text-lg transition-colors cursor-pointer">Sign Up</button>
             <p className="text-center text-gray-600 mb-6">
               Already have an account?{" "}
               <Link

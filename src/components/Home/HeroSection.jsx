@@ -40,14 +40,14 @@ export default function HeroSection() {
           className="flex flex-wrap justify-center gap-2 mb-4 max-w-6xl w-full rounded-2xl md:rounded-full bg-white/20 backdrop-blur-md p-2"
         >
           <div className="grid grid-cols-3 grid-rows-2 md:grid-cols-5 md:grid-rows-1 gap-2 w-full">
-            {categories.map((cat) => (
-              <button
-                key={cat}
+          {categories.map((cat) => (
+            <button
+              key={cat}
                 className="px-4 py-2 bg-white/10 rounded-full text-white font-medium hover:bg-primary hover:text-white transition w-full"
-              >
-                {cat}
-              </button>
-            ))}
+            >
+              {cat}
+            </button>
+          ))}
           </div>
         </motion.div>
         <motion.form
@@ -57,42 +57,42 @@ export default function HeroSection() {
           className="bg-white/20 backdrop-blur-md p-2 max-w-6xl w-full mx-auto rounded-2xl md:rounded-full"
         >
           <div className="grid grid-cols-3 grid-rows-2 md:grid-cols-5 md:grid-rows-1 gap-2 w-full">
-            <input
-              type="text"
-              placeholder="Location"
+          <input
+            type="text"
+            placeholder="Location"
               className="flex-1 px-3 py-2 border focus:outline-none bg-white/40 text-white placeholder-white/80 rounded-full w-full"
-            />
-            <div className="relative w-full">
-              <select className="flex-1 text-sm px-3 py-2 border focus:outline-none bg-white/40 text-white rounded-full pr-10 appearance-none w-full custom-blur-select">
-                <option className="bg-white/20 backdrop-blur-md text-white">Property Category</option>
-                <option className="bg-white/20 backdrop-blur-md text-white">Apartment</option>
-                <option className="bg-white/20 backdrop-blur-md text-white">House</option>
-                <option className="bg-white/20 backdrop-blur-md text-white">Commercial</option>
-                <option className="bg-white/20 backdrop-blur-md text-white">Land</option>
-                <option className="bg-white/20 backdrop-blur-md text-white">Lease</option>
-              </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 text-white">
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
-              </span>
-            </div>
-            <div className="relative w-full">
-              <select className="flex-1 text-sm px-3 py-2 border focus:outline-none bg-white/40 text-white rounded-full pr-10 appearance-none w-full custom-blur-select">
-                <option className="bg-white/20 backdrop-blur-md text-white">Bedroom</option>
-                <option className="bg-white/20 backdrop-blur-md text-white">1</option>
-                <option className="bg-white/20 backdrop-blur-md text-white">2</option>
-                <option className="bg-white/20 backdrop-blur-md text-white">3</option>
-                <option className="bg-white/20 backdrop-blur-md text-white">4+</option>
-              </select>
-              <span className="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 text-white">
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
-              </span>
-            </div>
-            <button
-              type="submit"
+          />
+          <div className="relative w-full">
+            <select className="flex-1 text-sm px-3 py-2 border focus:outline-none bg-white/40 text-white rounded-full pr-10 appearance-none w-full custom-blur-select">
+              <option className="bg-white/20 backdrop-blur-md text-white">Property Category</option>
+              <option className="bg-white/20 backdrop-blur-md text-white">Apartment</option>
+              <option className="bg-white/20 backdrop-blur-md text-white">House</option>
+              <option className="bg-white/20 backdrop-blur-md text-white">Commercial</option>
+              <option className="bg-white/20 backdrop-blur-md text-white">Land</option>
+              <option className="bg-white/20 backdrop-blur-md text-white">Lease</option>
+            </select>
+            <span className="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 text-white">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+            </span>
+          </div>
+          <div className="relative w-full">
+            <select className="flex-1 text-sm px-3 py-2 border focus:outline-none bg-white/40 text-white rounded-full pr-10 appearance-none w-full custom-blur-select">
+              <option className="bg-white/20 backdrop-blur-md text-white">Bedroom</option>
+              <option className="bg-white/20 backdrop-blur-md text-white">1</option>
+              <option className="bg-white/20 backdrop-blur-md text-white">2</option>
+              <option className="bg-white/20 backdrop-blur-md text-white">3</option>
+              <option className="bg-white/20 backdrop-blur-md text-white">4+</option>
+            </select>
+            <span className="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 text-white">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+            </span>
+          </div>
+          <button
+            type="submit"
               className="bg-primary text-black bg-white px-4 py-2 rounded-full font-semibold hover:bg-primary-dark w-full"
-            >
-              Search
-            </button>
+          >
+            Search
+          </button>
           </div>
         </motion.form>
       </div>
