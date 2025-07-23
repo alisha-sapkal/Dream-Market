@@ -39,10 +39,22 @@ export default function Navbar() {
     return () => window.removeEventListener('storage', syncUser);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    setUser(null);
-    window.dispatchEvent(new Event('storage'));
+  const handleLogout = async () => {
+    try {
+      const res = await fetch('/api/buyer/buyer-logout', {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': 'GBDabkcGa24yFjSf7JVeMnetua0eVdSe',
+          'Referer': 'https://dreamservice.onrender.com',
+        },
+        credentials: 'include', 
+      });
+      if (!res.ok) throw new Error('Logout failed');
+      setUser(null);
+      window.location.href = '/login';
+    } catch (err) {
+      alert('Logout failed. Please try again.');
+    }
   };
 
   return (

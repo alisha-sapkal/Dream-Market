@@ -9,8 +9,8 @@ export default function Home() {
     <div className="flex flex-col gap-8">
       <HeroSection />
       <div id="offers"><Offer /></div>
-      <div id="explore"><Explore /></div>
       <div id="listings"><Listing /></div>
+      <div id="explore"><Explore /></div>
       <div id="info"><Info /></div>
     </div>
   );

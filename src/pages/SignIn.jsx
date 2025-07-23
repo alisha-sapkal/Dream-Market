@@ -19,14 +19,14 @@ export default function SignIn() {
     e.preventDefault();
     setError('');
     try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
+      const res = await fetch('/api/buyer/buyer-login', {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: form.email, password: form.password })
+        credentials: 'include',
+        body: JSON.stringify({ email: form.email, password: form.password }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Login failed');
-      // The backend should set an HTTP-only cookie for authentication.
       toast.success('Login successful!');
       setTimeout(() => navigate('/'), 1200);
     } catch (err) {
@@ -121,7 +121,7 @@ export default function SignIn() {
             </button>
               <button type="button" className="text-sm text-gray-600 underline mt-2" onClick={() => setShowReset(true)}>
                 Forgot password?
-              </button>
+            </button>
             <p className="text-center text-gray-600 mb-6">
                 Don't have an account?{' '}
               <Link
