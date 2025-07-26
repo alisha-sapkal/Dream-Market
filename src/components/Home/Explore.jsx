@@ -37,6 +37,13 @@ import React, { useState } from "react";
 import { BedDouble, Bath, RulerDimensionLine, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  Calculator,
+  Wallet,
+  FileText,
+  IndianRupee,
+  Search,
+} from "lucide-react";
 
 const listings = [
   {
@@ -118,10 +125,39 @@ function Explore() {
   const navigate = useNavigate();
   const toggleLike = (idx) =>
     setLiked((liked) => liked.map((v, i) => (i === idx ? !v : v)));
+
+  const utilityButtons = [
+    {
+      icon: Calculator,
+      text: "EMI calculator",
+      onClick: () => console.log("EMI calculator clicked"),
+    },
+    {
+      icon: Wallet,
+      text: "Affordability calculator",
+      onClick: () => console.log("Affordability calculator clicked"),
+    },
+    {
+      icon: FileText,
+      text: "Eligibility calculator",
+      onClick: () => console.log("Eligibility calculator clicked"),
+    },
+    {
+      icon: IndianRupee,
+      text: "Price calculator",
+      onClick: () => console.log("Price calculator clicked"),
+    },
+    {
+      icon: Search,
+      text: "customize search",
+      onClick: () => console.log("Customize search clicked"),
+    },
+  ];
+
   return (
     <>
-    <motion.div
-        className="mb-6 sm:mb-8"
+      <motion.div
+        className="mb-6 sm:mb-8 px-2"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
@@ -143,192 +179,197 @@ function Explore() {
           Your trusted real estate partner in every transaction.
         </motion.p>
       </motion.div>
-    <motion.section
-      className="py-8 sm:py-10 md:py-12 bg-gray-100 flex flex-col md:flex-row justify-center items-center gap-2 md:gap-0"
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-    >
-      <motion.div
-        className="flex flex-wrap justify-center gap-2 w-full max-w-7xl overflow-y-auto max-h-[600px] scrollbar-none text-start"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        variants={containerVariants}
+      <motion.section
+        className="bg-gray-100 flex flex-col justify-between items-stretch gap-6"
         initial="hidden"
         animate="visible"
+        variants={containerVariants}
       >
-        <AnimatePresence>
-          {listings.map((listing, idx) => (
-            <motion.div
-              key={idx}
-              className="group rounded-2xl bg-white/30 backdrop-blur-md shadow-lg overflow-hidden flex flex-col transition-transform duration-300 min-w-[320px] w-[350px]"
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              whileHover="hover"
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
-              exit={{ opacity: 0, y: 40, transition: { duration: 0.3 } }}
-              layout
-            >
-              <motion.div className="relative" layout>
-                <motion.img
-                  src={listing.image}
-                  alt={listing.title}
-                  className="h-56 w-full object-cover rounded-2xl transition-transform duration-300 group-hover:scale-105"
-                  loading="lazy"
-                  initial={{ scale: 1.05, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
+        {/* Cards LEFT */}
+        <motion.div
+          className="w-full max-w-full overflow-x-auto scrollbar-hide p-2 sm:px-4 h-[350px] sm:h-[410px]"
+          style={{
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <style>{`
+          .scrollbar-hide::-webkit-scrollbar { display: none; }
+          .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        `}</style>
+          <div className="flex gap-4 sm:gap-6 md:gap-8 w-max items-start">
+            <AnimatePresence>
+              {listings.map((listing, idx) => (
+                <motion.div
+                  key={idx}
+                  className="group rounded-2xl bg-white/30 backdrop-blur-md shadow-lg overflow-hidden flex flex-col transition-transform duration-300 min-w-[280px] w-[280px] sm:min-w-[320px] sm:w-[320px]"
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  whileHover="hover"
+                  viewport={{ once: true, amount: 0.2 }}
                   transition={{
                     duration: 0.6,
-                    delay: 0.1 * idx,
+                    delay: idx * 0.1,
                     ease: "easeOut",
                   }}
-                />
-                <motion.div
-                  className="absolute top-4 left-4 flex gap-2"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + idx * 0.1, duration: 0.4 }}
+                  exit={{ opacity: 0, y: 40, transition: { duration: 0.3 } }}
+                  layout
                 >
-                  <span className="bg-primary text-white text-xs font-semibold uppercase rounded-full px-3 py-1 shadow">
-                    {listing.type}
-                  </span>
-                  <span className="bg-primary text-white text-xs font-semibold uppercase rounded-full px-3 py-1 shadow">
-                    {listing.category}
-                  </span>
-                </motion.div>
-                <motion.div
-                  className="absolute top-3 right-3"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3 + idx * 0.1, duration: 0.3 }}
-                >
-                  <div className="bg-white/40 backdrop-blur-xs rounded-full p-2 shadow flex items-center justify-center">
-                    <Heart
-                      className={`w-6 h-6 cursor-pointer transition-colors ${
-                        liked[idx]
-                          ? "fill-red-500 text-red-500"
-                          : "fill-none text-gray-300"
-                      }`}
-                      strokeWidth={2.5}
-                      onClick={() => toggleLike(idx)}
-                      fill={liked[idx] ? "#ef4444" : "none"}
+                  <motion.div className="relative" layout>
+                    <motion.img
+                      src={listing.image}
+                      alt={listing.title}
+                      className="h-48 sm:h-56 w-full object-cover rounded-2xl transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                      initial={{ scale: 1.05, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{
+                        duration: 0.6,
+                        delay: 0.1 * idx,
+                        ease: "easeOut",
+                      }}
                     />
-                  </div>
+                    <motion.div
+                      className="absolute top-2 sm:top-4 left-2 sm:left-4 flex gap-1 sm:gap-2"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 + idx * 0.1, duration: 0.4 }}
+                    >
+                      <span className="bg-primary text-white text-xs font-semibold uppercase rounded-full px-2 py-1 sm:px-3 shadow">
+                        {listing.type}
+                      </span>
+                      <span className="bg-primary text-white text-xs font-semibold uppercase rounded-full px-2 py-1 sm:px-3 shadow">
+                        {listing.category}
+                      </span>
+                    </motion.div>
+                    <motion.div
+                      className="absolute top-2 sm:top-3 right-2 sm:right-3"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.3 + idx * 0.1, duration: 0.3 }}
+                    >
+                      <div className="bg-white/40 backdrop-blur-xs rounded-full p-1.5 sm:p-2 shadow flex items-center justify-center">
+                        <Heart
+                          className={`w-5 h-5 sm:w-6 sm:h-6 cursor-pointer transition-colors ${
+                            liked[idx]
+                              ? "fill-red-500 text-red-500"
+                              : "fill-none text-gray-300"
+                          }`}
+                          strokeWidth={2.5}
+                          onClick={() => toggleLike(idx)}
+                          fill={liked[idx] ? "#ef4444" : "none"}
+                        />
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                  <motion.div
+                    className="flex justify-around mt-2 items-center px-2 sm:px-0"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.35 + idx * 0.1, duration: 0.3 }}
+                  >
+                    <div
+                      className="flex items-center gap-1 mr-auto border-1 border-gray-200 rounded-full p-1 cursor-pointer hover:bg-gray-100 transition"
+                      onClick={() => {
+                        // TODO: Fetch property details from backend using the property title or ID here.
+                        // Example:
+                        // fetch(`/api/properties/${listing.id}`)
+                        //   .then(res => res.json())
+                        //   .then(data => navigate(`/property-details/${encodeURIComponent(listing.title.toLowerCase().replace(/\s+/g, '-'))}`, { state: { property: data } }));
+                        // For now, just navigate as before:
+                        navigate(
+                          `/property-details/${encodeURIComponent(
+                            listing.title.toLowerCase().replace(/\s+/g, "-")
+                          )}`
+                        );
+                      }}
+                    >
+                      <img
+                        src={listing.image}
+                        alt="thumb"
+                        className="w-3 h-3 sm:w-4 sm:h-4 rounded-full object-cover"
+                      />
+                      <span className="text-xs sm:text-sm text-gray-500 font-medium">
+                        +4 Images
+                      </span>
+                    </div>
+                    <span className="text-primary text-sm sm:text-md font-semibold uppercase px-2 sm:px-3 py-1">
+                      {listing.price}
+                    </span>
+                  </motion.div>
+                  <motion.div
+                    className="flex-1 flex flex-col p-3 sm:p-4"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 + idx * 0.1, duration: 0.3 }}
+                  >
+                    <h3 className="text-base sm:text-lg font-bold mb-1 text-gray-900">
+                      {listing.title}
+                    </h3>
+                    <p className="text-gray-700 text-xs sm:text-sm mb-2">
+                      {listing.address}
+                    </p>
+                    <div className="flex items-center gap-2 sm:gap-4 text-gray-600 text-xs mb-4">
+                      <span className="flex items-center">
+                        <BedDouble className="w-4 h-4 sm:w-5 sm:h-5 mr-1 text-primary" />
+                        {listing.beds}
+                      </span>
+                      <span className="flex items-center">
+                        <Bath className="w-4 h-4 sm:w-5 sm:h-5 mr-1 text-primary" />
+                        {listing.baths}
+                      </span>
+                      <span className="flex items-center">
+                        <RulerDimensionLine className="w-4 h-4 sm:w-5 sm:h-5 mr-1 text-primary" />
+                        {listing.area}
+                      </span>
+                    </div>
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-              <motion.div
-                className="flex justify-around mt-2 items-center"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35 + idx * 0.1, duration: 0.3 }}
-              >
-                <div
-                  className="flex items-center gap-1 mr-auto border-1 border-gray-200 rounded-full p-1 cursor-pointer hover:bg-gray-100 transition"
-                  onClick={() => {
-                    // TODO: Fetch property details from backend using the property title or ID here.
-                    // Example:
-                    // fetch(`/api/properties/${listing.id}`)
-                    //   .then(res => res.json())
-                    //   .then(data => navigate(`/property-details/${encodeURIComponent(listing.title.toLowerCase().replace(/\s+/g, '-'))}`, { state: { property: data } }));
-                    // For now, just navigate as before:
-                    navigate(
-                      `/property-details/${encodeURIComponent(
-                        listing.title.toLowerCase().replace(/\s+/g, "-")
-                      )}`
-                    );
-                  }}
-                >
-                  <img
-                    src={listing.image}
-                    alt="thumb"
-                    className="w-4 h-4 rounded-full object-cover"
-                  />
-                  <span className="text-sm text-gray-500 font-medium">
-                    +4 Images
-                  </span>
-                </div>
-                <span className="text-primary text-md font-semibold uppercase px-3 py-1">
-                  {listing.price}
-                </span>
-              </motion.div>
-              <motion.div
-                className="flex-1 flex flex-col p-4"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 + idx * 0.1, duration: 0.3 }}
-              >
-                <h3 className="text-lg font-bold mb-1 text-gray-900">
-                  {listing.title}
-                </h3>
-                <p className="text-gray-700 text-sm mb-2">{listing.address}</p>
-                <div className="flex items-center gap-4 text-gray-600 text-xs mb-4">
-                  <span className="flex items-center">
-                    <BedDouble className="w-5 h-5 mr-1 text-primary" />
-                    {listing.beds}
-                  </span>
-                  <span className="flex items-center">
-                    <Bath className="w-5 h-5 mr-1 text-primary" />
-                    {listing.baths}
-                  </span>
-                  <span className="flex items-center">
-                    <RulerDimensionLine className="w-5 h-5 mr-1 text-primary" />
-                    {listing.area}
-                  </span>
-                </div>
-              </motion.div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </motion.div>
-      <motion.div
-        className="text-start bg-white rounded-2xl flex flex-col justify-between sm:p-6 self-center min-w-[200px] max-w-md w-full sm:p-2 md:w-auto md:mr-10 mb-4 md:mb-0"
-        initial={{ opacity: 0, x: -40 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-      >
-        <motion.h2
-          className="text-3xl sm:text-3xl font-semibold mb-2 text-start"
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-        >
-          Explore & Find your Dream home
-        </motion.h2>
-        <motion.p
-          className="text-gray-700 text-start mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.35, ease: "easeOut" }}
-        >
-          We help you find your place, invest and build wealth in United
-          Kingdom.
-        </motion.p>
-        <motion.div
-          className="flex flex-row gap-8 mb-4 border-2 border-gray-50 rounded-2xl text-center p-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.45, ease: "easeOut" }}
-        >
-          <div className="flex flex-col items-start">
-            <span className="text-3xl sm:text-4xl font-semibold text-primary">
-              $200M+
-            </span>
-            <span className="text-gray-600 text-sm font-medium">
-              Property in Real Estate
-            </span>
-          </div>
-          <div className="flex flex-col items-start">
-            <span className="text-3xl sm:text-4xl font-semibold text-primary">
-              100+
-            </span>
-            <span className="text-gray-600 text-sm font-medium">
-              Happy Customers
-            </span>
+              ))}
+            </AnimatePresence>
           </div>
         </motion.div>
-      </motion.div>
-    </motion.section>
+        <motion.div
+          className="overflow-x-auto scrollbar-hide h-[100px] sm:h-[120px]"
+          style={{
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+        >
+          <style>{`
+          .scrollbar-hide::-webkit-scrollbar { display: none; }
+          .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        `}</style>
+          <div className="flex flex-wrap justify-evenly gap-3 sm:gap-4 w-max px-2 sm:px-4 h-full items-center">
+            {utilityButtons.map((button, idx) => (
+              <motion.button
+                key={idx}
+                onClick={button.onClick}
+                className="flex flex-col items-center justify-center bg-gray-100 rounded-xl p-3 sm:p-4 min-w-[120px] sm:min-w-[140px] h-fit hover:bg-gray-200 transition-colors duration-200"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 + idx * 0.1 }}
+              >
+                <button.icon className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+                <span className="text-xs sm:text-sm font-medium text-black text-center">
+                  {button.text}
+                </span>
+              </motion.button>
+            ))}
+          </div>
+        </motion.div>
+      </motion.section>
     </>
   );
 }
