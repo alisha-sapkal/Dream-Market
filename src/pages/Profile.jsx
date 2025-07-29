@@ -6,8 +6,12 @@ import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
+import { useAuth } from '../context/AuthContext';
+
 
 export default function Profile() {
+
+   const { user, loading: authLoading } = useAuth();
   // Always fetch the current user from the backend using the cookie
   useEffect(() => {
     const fetchUser = async () => {
