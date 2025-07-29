@@ -114,9 +114,9 @@ export default function Navbar() {
           <Link to="/" className="text-[#52B8B8] text-xl font-bold">Dwello</Link>
           {/* Desktop */}
           <div className="hidden md:flex gap-4 text-sm font-light items-center">
-            {navLinks.map(link => (
+            {/* {navLinks.map(link => (
               <Link key={link.name} to={link.path} className="text-gray-700 hover:text-primary font-medium">{link.name}</Link>
-            ))}
+            ))} */}
             {extraNavLinks.map((item, idx) => (
               <div
                 key={item.name}
@@ -177,38 +177,53 @@ export default function Navbar() {
           </button>
         </div>
         {mobileOpen && (
-          <div className="md:hidden mt-2 bg-white/95 rounded-xl shadow-lg p-4 flex flex-col gap-2 animate-fade-in">
-            {navLinks.map(link => (
-              <Link key={link.name} to={link.path} className="text-gray-700 hover:text-primary font-medium py-2" onClick={() => setMobileOpen(false)}>{link.name}</Link>
-            ))}
-            {extraNavLinks.map((item, idx) => (
-              <Fragment key={item.name}>
-                <div className="font-semibold text-gray-700 mt-2">{item.name}</div>
-                {item.submenu.map((sub, subIdx) => (
-                  <Link
-                    key={sub.name + subIdx}
-                    to={sub.path}
-                    className="block pl-4 py-2 text-gray-600 hover:text-primary"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {sub.name}
-                  </Link>
-                ))}
-              </Fragment>
-            ))}
-            <div className="flex flex-col gap-2 mt-2">
-              {user ? (
-                <>
-                  <button onClick={handleLogout} className="px-4 py-2 text-center border bg-gray-200 rounded-full hover:bg-red-400">Logout</button>
-                </>
-              ) : (
-                <>
-                  <Link to="/signup" className="px-4 py-2 bg-black text-white rounded-full hover:bg-primary-dark">Sign Up</Link>
-                  <Link to="/login" className="px-4 py-2 text-center border bg-gray-200 rounded-full hover:bg-primary-light">Login</Link>
-                </>
-              )}
-            </div>
-          </div>
+          <AnimatePresence>
+            <motion.div
+              key="mobile-navbar"
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+              className="md:hidden mt-2 bg-white/95 rounded-xl shadow-lg p-4 flex flex-col gap-2"
+              style={{
+                maxHeight: '80vh',
+                overflowY: 'auto',
+                WebkitOverflowScrolling: 'touch',
+                scrollBehavior: 'smooth'
+              }}
+            >
+              {/* {navLinks.map(link => (
+                <Link key={link.name} to={link.path} className="text-gray-700 hover:text-primary font-medium py-2" onClick={() => setMobileOpen(false)}>{link.name}</Link>
+              ))} */}
+              {extraNavLinks.map((item, idx) => (
+                <Fragment key={item.name}>
+                  <div className="font-semibold text-gray-700 mt-2">{item.name}</div>
+                  {item.submenu.map((sub, subIdx) => (
+                    <Link
+                      key={sub.name + subIdx}
+                      to={sub.path}
+                      className="block pl-4 py-2 text-gray-600 hover:text-primary"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {sub.name}
+                    </Link>
+                  ))}
+                </Fragment>
+              ))}
+              <div className="flex flex-col gap-2 mt-2">
+                {user ? (
+                  <>
+                    <button onClick={handleLogout} className="px-4 py-2 text-center border bg-gray-200 rounded-full hover:bg-red-400">Logout</button>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/signup" className="px-4 py-2 bg-black text-white rounded-full hover:bg-primary-dark">Sign Up</Link>
+                    <Link to="/login" className="px-4 py-2 text-center border bg-gray-200 rounded-full hover:bg-primary-light">Login</Link>
+                  </>
+                )}
+              </div>
+            </motion.div>
+          </AnimatePresence>
         )}
       </div>
     </nav>

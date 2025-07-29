@@ -13,7 +13,7 @@ export default function Profile() {
     const fetchUser = async () => {
       try {
         // The backend should return the current user based on the session cookie
-        const res = await fetch(`/api/buyer/view-buyer/${user.username}`);
+        const res = await fetch(`https://dreamservice.onrender.com/api/buyer/view-buyer/${user.username}`);
         if (res.status === 401) {
           setProfileUser(null);
           setLoading(false);

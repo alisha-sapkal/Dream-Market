@@ -19,7 +19,7 @@ export default function SignIn() {
     e.preventDefault();
     setError('');
     try {
-      const res = await fetch('/api/buyer/buyer-login', {
+      const res = await fetch('https://dreamservice.onrender.com/api/buyer/buyer-login', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

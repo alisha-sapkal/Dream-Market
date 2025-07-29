@@ -51,7 +51,7 @@ export default function SignUp() {
       if (form.aadhaar_card) fd.append("aadhaar_card", form.aadhaar_card);
       if (form.pan_card) fd.append("pan_card", form.pan_card);
       if (form.profile_picture) fd.append("profile_picture", form.profile_picture);
-      const res = await fetch("/api/buyer/add-buyer", {
+      const res = await fetch("https://dreamservice.onrender.com/api/buyer/add-buyer", {
         method: "POST",
         body: fd,
       });
