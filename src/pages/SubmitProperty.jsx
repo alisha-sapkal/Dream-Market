@@ -83,7 +83,7 @@ export default function SubmitProperty() {
   const sendOtp = async () => {
     setOtpLoading(true);
     try {
-      const res = await fetch(`/api/buyer/buyer-verify-email/${form.email}`);
+      const res = await fetch(`https://dreamservice.onrender.com/api/buyer/buyer-verify-email/${form.email}`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to send OTP");
       toast.success("OTP sent to your email!");
@@ -99,7 +99,7 @@ export default function SubmitProperty() {
   const resendOtp = async () => {
     setOtpLoading(true);
     try {
-      const res = await fetch(`/api/buyer/resend-otp/${form.email}`);
+      const res = await fetch(`https://dreamservice.onrender.com/api/buyer/resend-otp/${form.email}`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to resend OTP");
       toast.success("OTP resent to your email!");

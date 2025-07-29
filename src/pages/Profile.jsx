@@ -76,7 +76,7 @@ export default function Profile() {
       fd.append('last_name', form.last_name);
       fd.append('email', form.email);
       fd.append('username', form.username);
-      const res = await fetch(`/api/buyer/update-buyer/${form.username}`, {
+      const res = await fetch(`https://dreamservice.onrender.com/api/buyer/update-buyer/${form.username}`, {
         method: 'PATCH',
         body: fd,
       });
@@ -97,7 +97,7 @@ export default function Profile() {
     if (!window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) return;
     setLoading(true);
     try {
-      const res = await fetch(`/api/buyer/delete-buyer/${form.username}`, {
+      const res = await fetch(`https://dreamservice.onrender.com/api/buyer/delete-buyer/${form.username}`, {
         method: 'DELETE',
       });
       const data = await res.json();

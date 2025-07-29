@@ -88,7 +88,7 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch('/api/buyer/buyer-logout', {
+      const res = await fetch('https://dreamservice.onrender.com/api/buyer/buyer-logout', {
         method: 'POST',
         headers: {
           'X-CSRFToken': 'GBDabkcGa24yFjSf7JVeMnetua0eVdSe',
