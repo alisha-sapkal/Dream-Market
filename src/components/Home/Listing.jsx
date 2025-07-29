@@ -173,7 +173,7 @@ function Listing() {
         </motion.p>
       </motion.div>
       <motion.div
-        className="max-w-6xl mx-auto overflow-x-auto scrollbar-hide px-2 sm:px-1 h-[410px] sm:h-[350px]"
+        className="max-w-6xl mx-auto overflow-x-auto scrollbar-hide px-2 sm:px-1 h-[400px] sm:h-[450px]"
         style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         variants={containerVariants}
         initial="hidden"
@@ -187,8 +187,8 @@ function Listing() {
           <AnimatePresence>
             {listings.map((listing, idx) => (
               <motion.div
-                key={listing.type}
-                className="group rounded-2xl bg-white/30 text-start backdrop-blur-md shadow-lg flex flex-col items-stretch overflow-hidden sm:px-2 p-2 min-w-[280px] w-[280px] sm:min-w-[320px] sm:w-[320px] h-fit"
+                key={listing.id || idx} 
+                className="group rounded-2xl bg-white/30 text-start backdrop-blur-md shadow-lg flex flex-col items-stretch overflow-hidden sm:px-2 p-2 min-w-[280px] w-[280px] sm:min-w-[320px] sm:w-[320px]"
                 variants={cardVariants}
                 initial="hidden"
                 whileInView="visible"

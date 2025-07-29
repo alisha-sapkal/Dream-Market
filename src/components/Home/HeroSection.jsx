@@ -40,9 +40,9 @@ export default function HeroSection() {
           className="flex flex-wrap justify-center gap-2 mb-4 max-w-6xl w-full rounded-2xl md:rounded-full bg-white/20 backdrop-blur-md p-2"
         >
           <div className="grid grid-cols-3 grid-rows-2 md:grid-cols-5 md:grid-rows-1 gap-2 w-full">
-          {categories.map((cat) => (
+          {categories.map((cat, idx) => (
             <button
-              key={cat}
+              key={cat + '-' + idx}
                 className="px-4 py-2 bg-white/10 rounded-full text-white font-medium hover:bg-primary hover:text-white transition w-full"
             >
               {cat}

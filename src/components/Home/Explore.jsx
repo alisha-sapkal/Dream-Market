@@ -180,14 +180,14 @@ function Explore() {
         </motion.p>
       </motion.div>
       <motion.section
-        className="bg-gray-100 flex flex-col justify-between items-stretch gap-6"
+        className="bg-gray-100 flex flex-col justify-center items-stretch"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
         {/* Cards LEFT */}
         <motion.div
-          className="w-full max-w-full overflow-x-auto scrollbar-hide p-2 sm:px-4 h-[350px] sm:h-[410px]"
+          className="w-full max-w-full overflow-x-auto scrollbar-hide p-2 sm:px-4 h-[390px] sm:h-[410px]"
           style={{
             WebkitOverflowScrolling: "touch",
             scrollbarWidth: "none",
@@ -335,7 +335,7 @@ function Explore() {
           </div>
         </motion.div>
         <motion.div
-          className="overflow-x-auto scrollbar-hide h-[100px] sm:h-[120px]"
+          className="overflow-x-auto text-center scrollbar-hide h-[100px] sm:h-[120px]"
           style={{
             WebkitOverflowScrolling: "touch",
             scrollbarWidth: "none",
@@ -349,7 +349,7 @@ function Explore() {
           .scrollbar-hide::-webkit-scrollbar { display: none; }
           .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         `}</style>
-          <div className="flex flex-wrap justify-evenly gap-3 sm:gap-4 w-max px-2 sm:px-4 h-full items-center">
+          <div className="flex flex-row justify-center gap-3 sm:gap-4 w-max px-2 sm:px-4 h-full items-center mx-auto">
             {utilityButtons.map((button, idx) => (
               <motion.button
                 key={idx}
