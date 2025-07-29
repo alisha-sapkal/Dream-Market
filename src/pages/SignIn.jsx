@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useUser } from "../context/UserContext";
 
 export default function SignIn() {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -10,6 +11,7 @@ export default function SignIn() {
   const [resetEmail, setResetEmail] = useState('');
   const [resetSent, setResetSent] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -27,6 +29,14 @@ export default function SignIn() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Login failed');
+      // Save user info to context and localStorage
+      setUser({
+        username: data.username,
+        email: data.email,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        phone_number: data.phone_number,
+      });
       toast.success('Login successful!');
       setTimeout(() => navigate('/'), 1200);
     } catch (err) {
@@ -164,4 +174,4 @@ export default function SignIn() {
       </div>
     </div>
   );
-} 
+}

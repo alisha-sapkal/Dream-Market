@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useUser } from "../context/UserContext";
 
 export default function SignUp() {
   const [form, setForm] = useState({
@@ -20,6 +21,7 @@ export default function SignUp() {
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -62,6 +64,14 @@ export default function SignUp() {
         toast.error(msg);
         return;
       }
+      // Save user info to context and localStorage
+      setUser({
+        username: form.username,
+        email: form.email,
+        first_name: form.first_name,
+        last_name: form.last_name,
+        phone_number: form.phone_number,
+      });
       toast.success("Signup successful! Please log in.");
       setTimeout(() => navigate("/login"), 1200);
     } catch (err) {

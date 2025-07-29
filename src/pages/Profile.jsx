@@ -1,53 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Ghost } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { useAuth } from '../components/AuthContext';
+import { useUser } from '../context/UserContext'; // <-- Import context
 
 
 export default function Profile() {
+  const { user } = useUser(); // <-- Get user from context
 
-   const { user, loading: authLoading } = useAuth();
-  // Always fetch the current user from the backend using the cookie
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        // The backend should return the current user based on the session cookie
-        const res = await fetch(`https://dreamservice.onrender.com/api/buyer/view-buyer/${user.username}`);
-        if (res.status === 401) {
-          setProfileUser(null);
-          setLoading(false);
-          return;
-        }
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message || 'Failed to fetch user');
-        setProfileUser(data);
-        setForm({
-          first_name: data.first_name || '',
-          last_name: data.last_name || '',
-          email: data.email || '',
-          username: data.username || '',
-          phone_number: data.phone_number || '',
-          password: data.password || '',
-          aadhaar_number: data.aadhaar_number || '',
-          pan_number: data.pan_number || '',
-          aadhaar_card: data.aadhaar_card || '',
-          pan_card: data.pan_card || '',
-          profile_picture: data.profile_picture || '',
-        });
-      } catch (err) {
-        toast.error(err.message || 'Failed to fetch user');
-        setProfileUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUser();
-  }, []);
   const [editMode, setEditMode] = useState(false);
   const [form, setForm] = useState({
     first_name: '',
@@ -115,6 +77,48 @@ export default function Profile() {
       setLoading(false);
     }
   };
+
+  // Always fetch the current user from the backend using the cookie
+  useEffect(() => {
+    const fetchUser = async () => {
+      setLoading(true);
+      try {
+        if (!user || !user.username) {
+          setProfileUser(null);
+          setLoading(false);
+          return;
+        }
+        const res = await fetch(`https://dreamservice.onrender.com/api/buyer/view-buyer/${user.username}`);
+        if (res.status === 401) {
+          setProfileUser(null);
+          setLoading(false);
+          return;
+        }
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Failed to fetch user');
+        setProfileUser(data);
+        setForm({
+          first_name: data.first_name || '',
+          last_name: data.last_name || '',
+          email: data.email || '',
+          username: data.username || '',
+          phone_number: data.phone_number || '',
+          password: data.password || '',
+          aadhaar_number: data.aadhaar_number || '',
+          pan_number: data.pan_number || '',
+          aadhaar_card: data.aadhaar_card || '',
+          pan_card: data.pan_card || '',
+          profile_picture: data.profile_picture || '',
+        });
+      } catch (err) {
+        toast.error(err.message || 'Failed to fetch user');
+        setProfileUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
+  }, [user]);
 
   return (
     <div className="flex flex-col items-center justify-center text-black">
@@ -234,4 +238,4 @@ export default function Profile() {
       </motion.div>
     </div>
   );
-} 
+}
