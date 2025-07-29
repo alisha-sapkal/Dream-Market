@@ -4,7 +4,7 @@ import { Ghost } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useUser } from '../component/UserContext'; // <-- Import context
+import { useUser } from '../components/UserContext'; // <-- Import context
 
 
 export default function Profile() {
