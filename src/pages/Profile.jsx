@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../components/AuthContext';
 
 
 export default function Profile() {
