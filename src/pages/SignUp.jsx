@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useUser } from "../context/UserContext";
+import { useUser } from "../component/UserContext";
 
 export default function SignUp() {
   const [form, setForm] = useState({
