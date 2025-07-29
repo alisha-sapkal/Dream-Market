@@ -114,9 +114,9 @@ export default function Navbar() {
           <Link to="/" className="text-[#52B8B8] text-xl font-bold">Dwello</Link>
           {/* Desktop */}
           <div className="hidden md:flex gap-4 text-sm font-light items-center">
-            {/* {navLinks.map(link => (
+            {navLinks.map(link => (
               <Link key={link.name} to={link.path} className="text-gray-700 hover:text-primary font-medium">{link.name}</Link>
-            ))} */}
+            ))}
             {extraNavLinks.map((item, idx) => (
               <div
                 key={item.name}
@@ -192,9 +192,9 @@ export default function Navbar() {
                 scrollBehavior: 'smooth'
               }}
             >
-              {/* {navLinks.map(link => (
+              {navLinks.map(link => (
                 <Link key={link.name} to={link.path} className="text-gray-700 hover:text-primary font-medium py-2" onClick={() => setMobileOpen(false)}>{link.name}</Link>
-              ))} */}
+              ))}
               {extraNavLinks.map((item, idx) => (
                 <Fragment key={item.name}>
                   <div className="font-semibold text-gray-700 mt-2">{item.name}</div>
