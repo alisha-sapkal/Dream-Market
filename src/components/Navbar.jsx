@@ -247,18 +247,8 @@ export default function Navbar() {
           </button>
         ) : (
           <>
-            <Link
-              to="/signup"
-              className="w-full px-4 py-2 bg-black text-white rounded-full hover:bg-primary-dark text-center"
-            >
-              Sign Up
-            </Link>
-            <Link
-              to="/login"
-              className="w-full px-4 py-2 border bg-gray-200 rounded-full hover:bg-primary-light text-center"
-            >
-              Login
-            </Link>
+            <Link to="/signup" className="ml-4 px-4 py-1 bg-black text-white rounded-full hover:bg-primary-dark">Sign Up</Link>
+            <Link to="/login" className="ml-2 px-4 py-1 text-center border bg-gray-200 rounded-full hover:bg-primary-light">Login</Link>
           </>
         )}
       </div>

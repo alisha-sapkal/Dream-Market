@@ -1,28 +1,60 @@
-import { Mic, Bell } from "lucide-react";
+import { Mic, Search } from "lucide-react";
 
 export default function SearchBar({ value, onChange }) {
   return (
-    <div className="flex flex-row sm:flex-row items-stretch sm:items-center gap-2 bg-white/80 rounded-full px-2 sm:px-3 py-2 shadow w-full">
-      <select className="rounded-full border-none bg-white text-black font-semibold px-3 py-2 focus:outline-none w-full sm:w-auto">
-        <option>property type</option>
-        <option>Apartment</option>
-        <option>House</option>
-        <option>Commercial</option>
-        <option>Land</option>
-      </select>
-      <input
-        type="text"
-        placeholder="Search..............."
-        className="flex-1 px-2 py-2 bg-transparent text-black font-semibold focus:outline-none w-full sm:w-auto"
-        value={value}
-        onChange={onChange}
-      />
-      <span className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 mx-auto sm:mx-2">
-        <Bell size={22} strokeWidth={2} className="text-black" />
-      </span>
-      <span className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 mx-auto">
-        <Mic size={22} strokeWidth={2} className="text-black" />
-      </span>
+    <div className="flex flex-row sm:flex-row items-stretch gap-2 sm:gap-3 bg-white/80 rounded-2xl p-3 sm:px-2 sm:py-3 shadow">
+      
+      {/* First row on mobile: Dropdown and Input */}
+      <div className="flex flex-row items-stretch gap-2 sm:gap-3 w-3/5 sm:w-full">
+        {/* Dropdown */}
+        <select className="rounded-full border-none bg-white text-black font-semibold py-2 px-2 sm:px-3 focus:outline-none 
+                           w-1/2 sm:max-w-[150px] sm:flex-shrink-0
+                           text-sm sm:text-base
+                           flex-shrink-0">
+          <option>Property Type</option>
+          <option>Apartment</option>
+          <option>House</option>
+          <option>Commercial</option>
+          <option>Land</option>
+        </select>
+
+        {/* Input - Smaller width on mobile */}
+        <input
+          type="text"
+          placeholder="Search..."
+          className="py-2 px-2 sm:px-3 bg-transparent text-black font-semibold focus:outline-none 
+                     w-1/2 sm:flex-1 sm:max-w-[150px] sm:w-auto
+                     text-md sm:text-base 
+                     min-h-[44px]
+                     placeholder:text-gray-400 placeholder:text-sm sm:placeholder:text-base"
+          value={value}
+          onChange={onChange}
+          autoComplete="off"
+          autoCapitalize="off"
+          autoCorrect="off"
+          spellCheck="false"
+          inputMode="search"
+        />
+      </div>
+
+      {/* Second row on mobile: Icons */}
+      <div className="flex flex-row gap-3 items-center justify-center sm:justify-end 
+                      sm:w-auto sm:flex-shrink-0 sm:gap-2">
+        <button 
+          type="button"
+          className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+          aria-label="Search"
+        >
+          <Search size={24} className="sm:w-5 sm:h-5 text-black" strokeWidth={2} />
+        </button>
+        <button 
+          type="button"
+          className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+          aria-label="Voice search"
+        >
+          <Mic size={24} className="sm:w-5 sm:h-5 text-black" strokeWidth={2} />
+        </button>
+      </div>
     </div>
   );
 }

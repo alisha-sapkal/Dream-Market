@@ -20,7 +20,7 @@ export default function StickySearchBar({
 
   return (
     <div className="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur shadow-md border-b border-gray-200">
-      <div className="flex items-center gap-2 max-w-6xl mx-auto px-2 sm:px-4 py-2 relative">
+      <div className="flex items-center gap-2 max-w-6xl px-2 sm:px-4 py-2 relative">
         <div className="flex-1 w-full md:w-auto">
           <SearchBar value={value} onChange={onChange} />
         </div>
@@ -84,7 +84,7 @@ export default function StickySearchBar({
                 </button>
 
                 {/* Dropdown - desktop */}
-                <div className="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full min-w-[220px] bg-white rounded-xl shadow-lg z-30 mt-2 py-3 px-2 md:block">
+                <div className="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full min-w-[220px] bg-white rounded-xl shadow-lg z-30 mt-2 py-3 px-2">
                   {item.submenu.map((sub, subIdx) => (
                     <Link
                       key={sub.name + subIdx}
@@ -126,18 +126,8 @@ export default function StickySearchBar({
               </button>
             ) : (
               <>
-                <Link
-                  to="/signup"
-                  className="px-4 py-2 bg-black text-white rounded-full hover:bg-primary-dark"
-                >
-                  Sign Up
-                </Link>
-                <Link
-                  to="/login"
-                  className="px-4 py-2 text-center border bg-gray-200 rounded-full hover:bg-primary-light"
-                >
-                  Login
-                </Link>
+                <Link to="/signup" className="ml-4 px-4 py-1 bg-black text-white rounded-full hover:bg-primary-dark">Sign Up</Link>
+            <Link to="/login" className="ml-2 px-4 py-1 text-center border bg-gray-200 rounded-full hover:bg-primary-light">Login</Link>
               </>
             )}
           </div>

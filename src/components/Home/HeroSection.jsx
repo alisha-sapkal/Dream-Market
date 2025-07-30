@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mic, Bell } from "lucide-react"; 
+import { Mic, Search } from "lucide-react";
 
 const HERO_BG =
   "url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80')";
@@ -71,7 +71,7 @@ export default function HeroSection() {
               />
 
               <span className="flex items-center justify-center w-14 h-10 rounded-full border border-gray-300 mx-2">
-                <Bell size={22} strokeWidth={2} className="text-white" />
+                <Search size={22} strokeWidth={2} className="text-white" />
               </span>
               <span className="flex items-center justify-center w-14 h-10 rounded-full border border-gray-300">
                 <Mic size={22} strokeWidth={2} className="text-white" />
