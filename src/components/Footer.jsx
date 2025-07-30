@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import { Instagram, Mail, Facebook, Phone } from "lucide-react"
+import { useUser } from "../components/UserContext";
 
 export default function Footer() {
+  const { user, setUser } = useUser();
+
+  const handleLogout = () => {
+    setUser(null);
+  };
+
   return (
     <footer className="text-black py-6 mt-8 w-full text-xs sm:text-sm">
       <div className="px-4 flex flex-col sm:flex-row justify-between items-center w-full gap-6 sm:gap-0">
@@ -100,6 +107,22 @@ export default function Footer() {
           <Phone/>
         </div>
         <div className="text-xs sm:text-xs md:text-lg">Copyright © 2024 Dwello®</div>
+      </div>
+      <div className="flex justify-center mt-4">
+        {user ? (
+          <button onClick={handleLogout} className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700">
+            Logout
+          </button>
+        ) : (
+          <>
+            <Link to="/signup" className="px-4 py-2 bg-black text-white rounded-full hover:bg-primary-dark mr-2">
+              Sign Up
+            </Link>
+            <Link to="/login" className="px-4 py-2 text-center border bg-gray-200 rounded-full hover:bg-primary-light">
+              Login
+            </Link>
+          </>
+        )}
       </div>
     </footer>
   );

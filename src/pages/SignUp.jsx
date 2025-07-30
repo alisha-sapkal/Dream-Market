@@ -20,6 +20,10 @@ export default function SignUp() {
     profile_picture: null,
   });
   const [error, setError] = useState("");
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
   const navigate = useNavigate();
   const { setUser } = useUser();
 
@@ -30,6 +34,46 @@ export default function SignUp() {
     } else {
       setForm({ ...form, [name]: value });
     }
+  };
+
+  const sendOtp = async (email) => {
+    setOtpLoading(true);
+    try {
+      const res = await fetch(`https://dreamservice.onrender.com/api/buyer/buyer-verify-email/${email}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to send OTP");
+      toast.success("OTP sent to your email!");
+      setOtpSent(true);
+    } catch (err) {
+      toast.error(err.message || "Failed to send OTP");
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
+  const verifyOtp = async () => {
+    setOtpLoading(true);
+    try {
+      const res = await fetch(`https://dreamservice.onrender.com/api/verify-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: form.email, otp }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "OTP verification failed");
+      toast.success("Email verified!");
+      setShowOtpModal(false);
+      setOtp("");
+      setTimeout(() => navigate("/login"), 1200);
+    } catch (err) {
+      toast.error(err.message || "OTP verification failed");
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
+  const resendOtp = async () => {
+    await sendOtp(form.email);
   };
 
   const handleSubmit = async (e) => {
@@ -64,7 +108,6 @@ export default function SignUp() {
         toast.error(msg);
         return;
       }
-      // Save user info to context and localStorage
       setUser({
         username: form.username,
         email: form.email,
@@ -73,7 +116,8 @@ export default function SignUp() {
         phone_number: form.phone_number,
       });
       toast.success("Signup successful! Please log in.");
-      setTimeout(() => navigate("/login"), 1200);
+      setShowOtpModal(true);
+      await sendOtp(form.email);
     } catch (err) {
       toast.error("Network error. Please try again later.");
     }
@@ -164,6 +208,36 @@ export default function SignUp() {
           </div>
         </div>
       </div>
+      
+      {showOtpModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-xs flex flex-col items-center">
+            <h3 className="text-lg font-bold mb-2">Enter OTP</h3>
+            <input
+              type="text"
+              value={otp}
+              onChange={e => setOtp(e.target.value)}
+              placeholder="Enter OTP"
+              className="border rounded px-3 py-2 mb-2 w-full text-center"
+              disabled={otpLoading}
+            />
+            <button
+              onClick={verifyOtp}
+              disabled={otpLoading || !otp}
+              className="w-full bg-black text-white rounded py-2 font-semibold mb-2"
+            >
+              {otpLoading ? "Verifying..." : "Verify OTP"}
+            </button>
+            <button
+              onClick={resendOtp}
+              disabled={otpLoading}
+              className="w-full bg-gray-200 text-black rounded py-2 font-semibold"
+            >
+              {otpLoading ? "Resending..." : "Resend OTP"}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

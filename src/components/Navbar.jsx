@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState, Fragment, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion'; // <-- Add this import
+import { motion, AnimatePresence } from 'framer-motion'; 
+import { useUser } from "../components/UserContext";
 
 const navLinks = [
   { name: 'Search Properties', path: '/search-result' },
@@ -55,11 +56,10 @@ const extraNavLinks = [
 ];
 
 export default function Navbar() {
+  const { user, setUser } = useUser();
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('user')));
-  // Track which dropdown is open for animation
   const [openDropdown, setOpenDropdown] = useState(null);
 
   useEffect(() => {
@@ -112,7 +112,6 @@ export default function Navbar() {
       <div className="p-4 sm:px-6 lg:px-8 w-full">
         <div className="flex justify-between h-16 items-center w-full">
           <Link to="/" className="text-[#52B8B8] text-xl font-bold">Dwello</Link>
-          {/* Desktop */}
           <div className="hidden md:flex gap-4 text-sm font-light items-center">
             {navLinks.map(link => (
               <Link key={link.name} to={link.path} className="text-gray-700 hover:text-primary font-medium">{link.name}</Link>
@@ -134,7 +133,6 @@ export default function Navbar() {
                   {item.name}
                   <svg className="ml-1 w-3 h-3 text-gray-400 group-hover:text-[#52B8B8] transition" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
                 </button>
-                {/* Dropdown with framer-motion */}
                 <AnimatePresence>
                   {openDropdown === idx && (
                     <motion.div
