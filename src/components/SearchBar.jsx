@@ -2,12 +2,12 @@ import { Mic, Search } from "lucide-react";
 
 export default function SearchBar({ value, onChange }) {
   return (
-    <div className="flex flex-row sm:flex-row items-stretch gap-2 sm:gap-3 bg-white/80 rounded-2xl p-3 sm:px-2 sm:py-3 shadow">
+    <div className="flex flex-row sm:flex-row items-stretch gap-2 sm:gap-3 backdrop-blur-md rounded-2xl p-3 sm:px-2 sm:py-3 shadow">
       
       {/* First row on mobile: Dropdown and Input */}
       <div className="flex flex-row items-stretch gap-2 sm:gap-3 w-3/5 sm:w-full">
         {/* Dropdown */}
-        <select className="rounded-full border-none bg-white text-black font-semibold py-2 px-2 sm:px-3 focus:outline-none 
+        <select className="rounded-full border-none text-black font-semibold py-2 px-2 sm:px-3 focus:outline-none 
                            w-1/2 sm:max-w-[150px] sm:flex-shrink-0
                            text-sm sm:text-base
                            flex-shrink-0">
@@ -26,7 +26,7 @@ export default function SearchBar({ value, onChange }) {
                      w-1/2 sm:flex-1 sm:max-w-[150px] sm:w-auto
                      text-md sm:text-base 
                      min-h-[44px]
-                     placeholder:text-gray-400 placeholder:text-sm sm:placeholder:text-base"
+                     placeholder:text-gray-600 placeholder:text-sm sm:placeholder:text-base"
           value={value}
           onChange={onChange}
           autoComplete="off"
@@ -42,14 +42,14 @@ export default function SearchBar({ value, onChange }) {
                       sm:w-auto sm:flex-shrink-0 sm:gap-2">
         <button 
           type="button"
-          className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+          className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full border border-gray-300 hover:bg-gray-50 focus:outline-none  transition-colors"
           aria-label="Search"
         >
           <Search size={24} className="sm:w-5 sm:h-5 text-black" strokeWidth={2} />
         </button>
         <button 
           type="button"
-          className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+          className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full border border-gray-300 hover:bg-gray-50 focus:outline-none  transition-colors"
           aria-label="Voice search"
         >
           <Mic size={24} className="sm:w-5 sm:h-5 text-black" strokeWidth={2} />

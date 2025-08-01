@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Mic, Search } from "lucide-react";
+import SearchBar from "../SearchBar";
 
 const HERO_BG =
   "url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80')";
@@ -56,26 +57,7 @@ export default function HeroSection() {
             </div>
 
             <div className="flex flex-row justify-evenly gap-2 w-full">
-              <select className="px-4 py-2 bg-white/10 rounded-full text-white font-medium hover:bg-primary hover:text-white transition w-full">
-                <option>property type</option>
-                <option>Apartment</option>
-                <option>House</option>
-                <option>Commercial</option>
-                <option>Land</option>
-              </select>
-
-              <input
-                type="text"
-                placeholder="Search..............."
-                className="flex-1 px-2 py-2 bg-transparent text-white font-semibold focus:outline-none"
-              />
-
-              <span className="flex items-center justify-center w-14 h-10 rounded-full border border-gray-300 mx-2">
-                <Search size={22} strokeWidth={2} className="text-white" />
-              </span>
-              <span className="flex items-center justify-center w-14 h-10 rounded-full border border-gray-300">
-                <Mic size={22} strokeWidth={2} className="text-white" />
-              </span>
+              <SearchBar />
             </div>
 
             <div className="flex flex-row justify-evenly gap-2 w-full">
