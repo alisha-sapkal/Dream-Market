@@ -1,12 +1,9 @@
 import { Mic, Search } from "lucide-react";
 
-export default function SearchBar({ value, onChange }) {
+export default function SearchBar({ value, onChange, onSearchClick }) {
   return (
     <div className="flex flex-row sm:flex-row items-stretch gap-2 sm:gap-3 backdrop-blur-md rounded-2xl p-3 sm:px-2 sm:py-3 shadow">
-      
-      {/* First row on mobile: Dropdown and Input */}
       <div className="flex flex-row items-stretch gap-2 sm:gap-3 w-3/5 sm:w-full">
-        {/* Dropdown */}
         <select className="rounded-full border-none text-black font-semibold py-2 px-2 sm:px-3 focus:outline-none 
                            w-1/2 sm:max-w-[150px] sm:flex-shrink-0
                            text-sm sm:text-base
@@ -18,7 +15,6 @@ export default function SearchBar({ value, onChange }) {
           <option>Land</option>
         </select>
 
-        {/* Input - Smaller width on mobile */}
         <input
           type="text"
           placeholder="Search..."
@@ -37,19 +33,19 @@ export default function SearchBar({ value, onChange }) {
         />
       </div>
 
-      {/* Second row on mobile: Icons */}
       <div className="flex flex-row gap-3 items-center justify-center sm:justify-end 
                       sm:w-auto sm:flex-shrink-0 sm:gap-2">
         <button 
           type="button"
-          className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full border border-gray-300 hover:bg-gray-50 focus:outline-none  transition-colors"
+          onClick={onSearchClick}
+          className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full border border-gray-300 hover:scale-110 focus:outline-none transition-transform"
           aria-label="Search"
         >
           <Search size={24} className="sm:w-5 sm:h-5 text-black" strokeWidth={2} />
         </button>
         <button 
           type="button"
-          className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full border border-gray-300 hover:bg-gray-50 focus:outline-none  transition-colors"
+          className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-full border border-gray-300 hover:scale-110 focus:outline-none transition-transform"
           aria-label="Voice search"
         >
           <Mic size={24} className="sm:w-5 sm:h-5 text-black" strokeWidth={2} />
@@ -58,3 +54,4 @@ export default function SearchBar({ value, onChange }) {
     </div>
   );
 }
+

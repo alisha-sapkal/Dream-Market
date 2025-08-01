@@ -1,13 +1,21 @@
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Mic, Search } from "lucide-react";
 import SearchBar from "../SearchBar";
+//make the searchbar aply filter on searching
 
 const HERO_BG =
   "url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80')";
 
 const categories = ["Rent", "Sale", "Commercial", "Land", "Lease"];
 
-export default function HeroSection() {
+export default function HeroSection({ onSearch }) {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = () => {
+    if (onSearch) onSearch(searchTerm);
+  };
+
   return (
     <section
       className="w-full min-h-[200px] sm:min-h-[300px] flex flex-col items-center justify-center text-center text-white px-4 rounded-2xl"
@@ -37,7 +45,6 @@ export default function HeroSection() {
           </p>
         </motion.div>
 
-
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -57,7 +64,11 @@ export default function HeroSection() {
             </div>
 
             <div className="flex flex-row justify-evenly gap-2 w-full">
-              <SearchBar />
+              <SearchBar
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onSearchClick={handleSearch}
+              />
             </div>
 
             <div className="flex flex-row justify-evenly gap-2 w-full">
@@ -72,8 +83,6 @@ export default function HeroSection() {
             </div>
           </div>
         </motion.div>
-
-        
       </div>
     </section>
   );
