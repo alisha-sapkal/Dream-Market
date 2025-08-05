@@ -137,11 +137,24 @@ const cardVariants = {
   },
 };
 
-function Listing() {
-  const [liked, setLiked] = useState(Array(listings.length).fill(false));
-  const navigate = useNavigate();
-  const toggleLike = (idx) =>
-    setLiked((liked) => liked.map((v, i) => (i === idx ? !v : v)));
+function Listing({ searchTerm = "", selectedCategory = "All" }) {
+  const [liked, setLiked] = useState(Array(listings.length).fill(false))
+  const navigate = useNavigate()
+  const toggleLike = (idx) => setLiked((liked) => liked.map((v, i) => (i === idx ? !v : v)))
+
+  // Filter listings
+  const filteredListings = listings.filter((listing) => {
+    const matchesSearch =
+      !searchTerm ||
+      listing.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      listing.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      listing.type.toLowerCase().includes(searchTerm.toLowerCase())
+
+    const matchesCategory =
+      selectedCategory === "All" || listing.category === selectedCategory || listing.type === selectedCategory
+
+    return matchesSearch && matchesCategory
+  })
   return (
     <motion.section
       className="px-2 sm:px-4 md:px-8"
@@ -184,8 +197,8 @@ function Listing() {
           .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         `}</style>
         <div className="flex gap-4 sm:gap-6 w-max h-full items-start">
-          <AnimatePresence>
-            {listings.map((listing, idx) => (
+          <AnimatePresence mode="popLayout">
+            {filteredListings.map((listing, idx) => (
               <motion.div
                 key={listing.id || idx} 
                 className="group rounded-2xl bg-white/30 text-start backdrop-blur-md shadow-lg flex flex-col items-stretch overflow-hidden sm:px-2 p-2 min-w-[280px] w-[280px] sm:min-w-[320px] sm:w-[320px]"

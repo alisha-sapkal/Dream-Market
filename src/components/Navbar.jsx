@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useUser } from "../components/UserContext";
+import { useUser } from "./UserContext";
 
 export const navLinks = [
   { name: "Search Properties", path: "/search-result" },
@@ -45,14 +45,14 @@ export const extraNavLinks = [
       { name: "Advertise", path: "/advertise" },
     ],
   },
-  {
-    name: "Insights",
-    submenu: [
-      { name: "Advice", path: "/advice" },
-      { name: "News & Articles", path: "/news" },
-      { name: "Market Trends", path: "/trends" },
-    ],
-  },
+  // {
+  //   name: "Insights",
+  //   submenu: [
+  //     { name: "Advice", path: "/advice" },
+  //     { name: "News & Articles", path: "/news" },
+  //     { name: "Market Trends", path: "/trends" },
+  //   ],
+  // },
 ];
 
 export default function Navbar() {

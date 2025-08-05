@@ -120,11 +120,57 @@ const cardVariants = {
   },
 };
 
-function Explore() {
-  const [liked, setLiked] = useState(Array(listings.length).fill(false));
-  const navigate = useNavigate();
-  const toggleLike = (idx) =>
-    setLiked((liked) => liked.map((v, i) => (i === idx ? !v : v)));
+const Explore = ({ searchTerm = "", selectedCategory = "All" }) => {
+  const listings = [
+    {
+      image:
+        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+      price: "$350,000",
+      type: "Rent",
+      category: "New launch",
+      title: "Modern Condo",
+      address: "29, Pine Avenue, Kent, UK",
+      beds: 2,
+      baths: 2,
+      area: "78.5 m²",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1460518451285-97b6aa326961?auto=format&fit=crop&w=400&q=80",
+      price: "$450,000",
+      type: "Rent",
+      category: "Commercial",
+      title: "Charming Historic Home",
+      address: "68, McLewin, London, UK",
+      beds: 4,
+      baths: 2,
+      area: "120 m²",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=400&q=80",
+      price: "$300,000",
+      type: "Commercial",
+      category: "Projects",
+      title: "Cozy Cottage Views",
+      address: "203 Evy Street, Suite 4, Westminster",
+      beds: 3,
+      baths: 3,
+      area: "95 m²",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
+      price: "$150,000",
+      type: "Commercial",
+      category: "New launch",
+      title: "Contemporary Downtown Loft",
+      address: "14 Glover, Birmingham, UK",
+      beds: 0,
+      baths: 1,
+      area: "60 m²",
+    },
+  ];
 
   const utilityButtons = [
     {
@@ -153,6 +199,25 @@ function Explore() {
       onClick: () => console.log("Customize search clicked"),
     },
   ];
+
+  const [liked, setLiked] = useState(Array(listings.length).fill(false));
+  const navigate = useNavigate();
+  const toggleLike = (idx) =>
+    setLiked((liked) => liked.map((v, i) => (i === idx ? !v : v)));
+
+  // Filter listings based on search term and category
+  const filteredListings = listings.filter((listing) => {
+    const matchesSearch =
+      !searchTerm ||
+      listing.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      listing.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      listing.type.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesCategory =
+      selectedCategory === "All" || listing.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <>
@@ -185,7 +250,17 @@ function Explore() {
         animate="visible"
         variants={containerVariants}
       >
-        {/* Cards LEFT */}
+        <motion.p
+          className="text-gray-600 text-start text-sm sm:text-base mb-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+        >
+        {filteredListings.length} properties found
+        {searchTerm && ` for "${searchTerm}"`}
+        {selectedCategory !== "All" && ` in ${selectedCategory}`}
+      </motion.p>
+
         <motion.div
           className="w-full max-w-full overflow-x-auto scrollbar-hide p-2 sm:px-4 h-[390px] sm:h-[410px]"
           style={{
@@ -202,8 +277,8 @@ function Explore() {
           .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         `}</style>
           <div className="flex gap-4 sm:gap-6 md:gap-8 w-max items-start">
-            <AnimatePresence>
-              {listings.map((listing, idx) => (
+          <AnimatePresence mode="popLayout">
+              {filteredListings.map((listing, idx) => (
                 <motion.div
                   key={idx}
                   className="group rounded-2xl bg-white/30 backdrop-blur-md shadow-lg overflow-hidden flex flex-col transition-transform duration-300 min-w-[280px] w-[280px] sm:min-w-[320px] sm:w-[320px]"
@@ -372,6 +447,6 @@ function Explore() {
       </motion.section>
     </>
   );
-}
+};
 
 export default Explore;

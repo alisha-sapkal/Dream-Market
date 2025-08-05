@@ -7,14 +7,20 @@ import SearchBar from "../SearchBar";
 const HERO_BG =
   "url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80')";
 
-const categories = ["Rent", "Sale", "Commercial", "Land", "Lease"];
+const categories = ["All", "New launch", "Commercial", "Projects"]
 
-export default function HeroSection({ onSearch }) {
-  const [searchTerm, setSearchTerm] = useState("");
+export default function HeroSection({ onSearch, onCategoryChange }) {
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("All")
 
   const handleSearch = () => {
-    if (onSearch) onSearch(searchTerm);
-  };
+    if (onSearch) onSearch(searchTerm)
+  }
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category)
+    if (onCategoryChange) onCategoryChange(category)
+  }
 
   return (
     <section
@@ -53,12 +59,13 @@ export default function HeroSection({ onSearch }) {
         >
           <div className="flex flex-col gap-2">
             <div className="flex flex-row justify-evenly gap-2">
-              {["New launch", "Commercial", "Projects"].map((label, i) => (
+              {categories.map((category, i) => (
                 <button
                   key={i}
+                  onClick={() => handleCategoryClick(category)}
                   className="px-4 py-2 bg-white/10 rounded-full text-white font-medium hover:bg-primary hover:text-white transition w-full"
                 >
-                  {label}
+                  {category}
                 </button>
               ))}
             </div>

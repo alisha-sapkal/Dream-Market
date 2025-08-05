@@ -55,8 +55,21 @@ const cardVariants = {
   hover: { scale: 1.035, boxShadow: "0 8px 32px rgba(0,0,0,0.10)", transition: { duration: 0.22 } }
 };
 
-function MoreProperties() {
-  const navigate = useNavigate();
+function MoreProperties({ searchTerm = "", selectedCategory = "All" }) {
+  const navigate = useNavigate()
+
+  // Filter properties
+  const filteredProperties = properties.filter((property) => {
+    const matchesSearch =
+      !searchTerm ||
+      property.headline.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      property.desc.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      property.type.toLowerCase().includes(searchTerm.toLowerCase())
+
+    const matchesCategory = selectedCategory === "All" || property.type === selectedCategory
+
+    return matchesSearch && matchesCategory
+  })
   return (
     <motion.section
       className=""
@@ -77,8 +90,8 @@ function MoreProperties() {
           .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         `}</style>
         <div className="flex gap-4 sm:gap-6 w-max h-full items-start py-2 sm:py-4">
-          <AnimatePresence>
-            {properties.map((offer, idx) => (
+          <AnimatePresence mode="popLayout">
+            {filteredProperties.map((offer, idx) => (
               <motion.div
                 key={offer.type}
                 className="group rounded-2xl bg-white/30 text-start backdrop-blur-md shadow-lg flex flex-col items-stretch overflow-hidden sm:px-2 p-2 min-w-[280px] w-[280px] sm:min-w-[320px] sm:w-[320px] h-[350px] sm:h-[400px]"

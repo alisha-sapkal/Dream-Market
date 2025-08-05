@@ -14,6 +14,8 @@ import { useEffect, useState } from 'react';
 import './App.css'
 import StickySearchBar from './components/StickySearchBar';
 import { useUser } from './components/UserContext';
+import CompanyDetailsForm from './components/SubmitProperty/CompanyDetailsForm';
+import AgentDetailsForm from './components/SubmitProperty/AgentDetailsForm';
 
 function Layout({ children }) {
   const location = useLocation();
@@ -75,7 +77,8 @@ function App() {
           <Route path="/submit-property" element={<SubmitProperty />} />
           <Route path="/property-details/:title" element={<PropertyDetails />} />
           <Route path="/agent/:agentName" element={<AgentProfile />} />
-          {/* Add more routes here for other pages */}
+          <Route path="/builder-company-details" element={<CompanyDetailsForm />} />
+          <Route path="/agent-business-details" element={<AgentDetailsForm />} />
         </Routes>
       </Layout>
     </Router>
