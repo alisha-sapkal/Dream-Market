@@ -70,8 +70,7 @@ const AgentDetailsForm = () => {
         agencyGstin: '',
       });
 
-      // Redirect to upload property form
-      setTimeout(() => navigate('/submit-property'), 1500); // Wait for toast to show
+      setTimeout(() => navigate('/submit-property'), 1500);
 
     } catch (err) {
       setLoading(false);

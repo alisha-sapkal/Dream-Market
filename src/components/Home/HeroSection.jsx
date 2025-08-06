@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Mic, Search } from "lucide-react";
 import SearchBar from "../SearchBar";
-//make the searchbar aply filter on searching
 
 const HERO_BG =
   "url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80')";

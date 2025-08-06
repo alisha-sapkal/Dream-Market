@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-// Importing shadcn/ui components and lucide-react for the spinner icon
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { Loader2 } from "lucide-react";
-// Importing react-toastify for toast notifications
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
@@ -23,43 +21,27 @@ const CompanyDetailsForm = () => {
     companyGstin: "",
   });
 
-  // State for UI feedback during form submission
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  /**
-   * Handles the change event for all form inputs.
-   * Updates the corresponding state field with the new value.
-   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  /**
-   * Handles the form submission.
-   * Prevents default browser behavior, sends data to a mock backend endpoint,
-   * and handles the response using toast notifications.
-   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // In a live application, this would be your actual backend endpoint
-    const backendUrl = "/api/save-builder-details";
-
-    // Data to be sent to the backend
     const payload = JSON.stringify(formData);
 
     try {
-      // The fetch request, configured to send cookies.
       const response = await fetch(backendUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: payload,
-        // Crucial for sending cookies with the request
         credentials: "include",
       });
 
@@ -77,7 +59,6 @@ const CompanyDetailsForm = () => {
 
       toast.success(result.message || "Company details saved successfully!");
 
-      // Reset the form on successful submission
       setFormData({
         companyName: "",
         registeredAddress: "",
@@ -90,8 +71,7 @@ const CompanyDetailsForm = () => {
         companyGstin: "",
       });
 
-      // Redirect to upload property form
-      setTimeout(() => navigate("/submit-property"), 1500); // Wait for toast to show
+      setTimeout(() => navigate("/submit-property"), 1500);
     } catch (err) {
       setLoading(false);
       toast.error(
@@ -113,7 +93,6 @@ const CompanyDetailsForm = () => {
           </p>
         </header>
 
-        {/* Form Section with shadcn/ui components */}
         <form
           onSubmit={handleSubmit}
           className="space-y-8 bg-white p-10 rounded-2xl shadow-lg border border-gray-300"

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Ghost } from 'lucide-react';
+import { Ghost, User, Mail, Phone, CreditCard, FileText, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useUser } from '../components/UserContext'; // <-- Import context
-
+import { useUser } from '../components/UserContext';
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
 export default function Profile() {
-  const { user } = useUser(); // <-- Get user from context
+  const { user, setUser } = useUser();
 
   const [editMode, setEditMode] = useState(false);
   const [form, setForm] = useState({
@@ -26,6 +26,7 @@ export default function Profile() {
   });
   const [profileUser, setProfileUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [favourites, setFavourites] = useState([]);
   const navigate = useNavigate();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deleteInput, setDeleteInput] = useState("");
@@ -42,15 +43,31 @@ export default function Profile() {
       fd.append('last_name', form.last_name);
       fd.append('email', form.email);
       fd.append('username', form.username);
+      fd.append('phone_number', form.phone_number);
+      fd.append('aadhaar_number', form.aadhaar_number);
+      fd.append('pan_number', form.pan_number);
+      
       const res = await fetch(`https://dreamservice.onrender.com/api/buyer/update-buyer/${form.username}`, {
         method: 'PATCH',
         body: fd,
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Update failed');
+      
+      // Update the user context with new data
+      setUser({
+        ...user,
+        first_name: form.first_name,
+        last_name: form.last_name,
+        email: form.email,
+        username: form.username,
+        phone_number: form.phone_number,
+        aadhaar_number: form.aadhaar_number,
+        pan_number: form.pan_number,
+      });
+      
       toast.success('Profile updated!');
       setEditMode(false);
-      // No localStorage: backend session/cookie will keep user logged in
     } catch (err) {
       toast.error(err.message || 'Update failed');
     } finally {
@@ -58,7 +75,6 @@ export default function Profile() {
     }
   };
 
-  // Add delete handler
   const handleDelete = async () => {
     if (!window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) return;
     setLoading(true);
@@ -68,9 +84,11 @@ export default function Profile() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Delete failed');
+      
+      // Clear user from context and localStorage
+      setUser(null);
       toast.success('Account deleted successfully!');
-      // No localStorage: backend session/cookie will be cleared on backend
-      setTimeout(() => navigate('/signup'), 1200);
+      setTimeout(() => navigate('/'), 1200);
     } catch (err) {
       toast.error(err.message || 'Delete failed');
     } finally {
@@ -78,112 +96,121 @@ export default function Profile() {
     }
   };
 
-  // Always fetch the current user from the backend using the cookie
   useEffect(() => {
-    const fetchUser = async () => {
-      setLoading(true);
-      try {
-        if (!user || !user.username) {
-          setProfileUser(null);
-          setLoading(false);
-          return;
-        }
-        const res = await fetch(`https://dreamservice.onrender.com/api/buyer/view-buyer/${user.username}`);
-        if (res.status === 401) {
-          setProfileUser(null);
-          setLoading(false);
-          return;
-        }
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message || 'Failed to fetch user');
-        setProfileUser(data);
-        setForm({
-          first_name: data.first_name || '',
-          last_name: data.last_name || '',
-          email: data.email || '',
-          username: data.username || '',
-          phone_number: data.phone_number || '',
-          password: data.password || '',
-          aadhaar_number: data.aadhaar_number || '',
-          pan_number: data.pan_number || '',
-          aadhaar_card: data.aadhaar_card || '',
-          pan_card: data.pan_card || '',
-          profile_picture: data.profile_picture || '',
-        });
-      } catch (err) {
-        toast.error(err.message || 'Failed to fetch user');
-        setProfileUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUser();
+    if (user) {
+      setProfileUser(user);
+      setForm({
+        first_name: user.first_name || '',
+        last_name: user.last_name || '',
+        email: user.email || '',
+        username: user.username || '',
+        phone_number: user.phone_number || '',
+        password: '',
+        aadhaar_number: user.aadhaar_number || '',
+        pan_number: user.pan_number || '',
+        aadhaar_card: user.aadhaar_card || '',
+        pan_card: user.pan_card || '',
+        profile_picture: user.profile_picture || '',
+      });
+    } else {
+      setProfileUser(null);
+    }
+    setLoading(false);
   }, [user]);
 
+  // Track favorites
+  useEffect(() => {
+    const updateFavs = () => {
+      const favs = JSON.parse(localStorage.getItem('favourites') || '[]');
+      setFavourites(favs);
+    };
+    updateFavs();
+    window.addEventListener('favouritesUpdated', updateFavs);
+    return () => window.removeEventListener('favouritesUpdated', updateFavs);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="w-full flex justify-center items-center min-h-screen">
+        <div className="text-center text-gray-400">Loading profile...</div>
+      </div>
+    );
+  }
+
+  if (!profileUser) {
+    return (
+      <div className="w-full flex justify-center items-center min-h-screen">
+        <div className="text-center">
+          <Ghost size={64} color="#E3E3E3" className="mx-auto mb-4" />
+          <h2 className="text-2xl font-semibold mb-4">You're not logged in</h2>
+          <div className="flex justify-center gap-4">
+            <Link to="/signup" className="px-6 py-2 bg-black text-white rounded-full font-semibold hover:bg-gray-800">Sign Up</Link>
+            <Link to="/login" className="px-6 py-2 bg-gray-200 text-black rounded-full font-semibold hover:bg-gray-300">Log in</Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center text-black">
+    <div className="w-full flex justify-center items-start">
+      <div className="max-w-8xl px-4 py-6 sm:px-6 md:px-8 lg:px-10 w-full">
       <motion.h1
-        className='text-4xl font-semibold w-full text-start mb-8 px-8'
+          className="text-4xl font-semibold mb-8"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
       >
         Profile
       </motion.h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          {/* Profile Header Section */}
       <motion.div
-        className="bg-opacity-60 p-8 rounded-xl w-full max-w-md text-center"
+            className="flex flex-col md:flex-row gap-4 border-1 border-gray-100 rounded-2xl p-4 items-center md:items-start"
         initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.2 }}
-      >
-        <Ghost size={64} color="#E3E3E3" className="mx-auto mb-2" />
-        <h2 className="text-3xl font-semibold mb-6">Who are you?</h2>
-        {loading ? (
-          <div className="text-center text-gray-400">Loading profile...</div>
-        ) : profileUser ? (
-          <div className="flex flex-col items-center justify-center">
-            {editMode ? (
-              <div className="flex flex-col gap-3 items-start mb-4 w-full">
-                <label className="text-left w-full">First Name
-                  <input name="first_name" value={form.first_name} onChange={handleChange} className="border rounded px-2 py-1 w-full" />
-                </label>
-                <label className="text-left w-full">Last Name
-                  <input name="last_name" value={form.last_name} onChange={handleChange} className="border rounded px-2 py-1 w-full" />
-                </label>
-                <label className="text-left w-full">Email
-                  <input name="email" value={form.email} onChange={handleChange} className="border rounded px-2 py-1 w-full" />
-                </label>
-                <label className="text-left w-full">Username
-                  <input name="username" value={form.username} onChange={handleChange} className="border rounded px-2 py-1 w-full" />
-                </label>
-                <div className="flex gap-2 mt-2">
-                  <button onClick={handleUpdate} disabled={loading} className="px-4 py-2 bg-black text-white rounded-full font-semibold hover:bg-primary-dark">{loading ? 'Updating...' : 'Update'}</button>
-                  <button onClick={() => setEditMode(false)} className="px-4 py-2 bg-gray-200 text-black rounded-full font-semibold hover:bg-gray-300">Cancel</button>
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7 }}
+          >
+            <div className="w-full max-h-72 flex items-center justify-center">
+              {profileUser.profile_picture ? (
+                <img
+                  src={profileUser.profile_picture}
+                  alt="Profile"
+                  className="w-full max-h-72 object-cover rounded-2xl shadow"
+                />
+              ) : (
+                <div className="w-full max-h-72 bg-gray-200 rounded-2xl flex items-center justify-center shadow">
+                  <User size={120} color="#B0B0B0" />
                 </div>
+              )}
+            </div>
+            <div className="flex flex-col justify-between gap-2 items-center md:items-start w-full">
+              <h1 className="text-2xl sm:text-3xl mb-1 text-center md:text-left">
+                {profileUser.first_name} {profileUser.last_name}
+                <span className="text-sm text-gray-400 p-2">User</span>
+              </h1>
+              <div className="text-primary font-semibold mb-2 text-center md:text-left">
+                <span className="text-sm text-gray-400 p-2">Username</span>
+                @{profileUser.username}
               </div>
-            ) : (
-              <div className="w-full max-w-lg bg-white/80 shadow-xl rounded-2xl p-8 flex flex-col items-center border border-gray-200">
-                <div className="w-28 h-28 rounded-full bg-gray-200 flex items-center justify-center mb-4 shadow">
-                  {/* Profile picture or fallback icon */}
-                  {profileUser.profile_picture ? (
-                    <img src={profileUser.profile_picture} alt="Profile" className="w-28 h-28 rounded-full object-cover" />
-                  ) : (
-                    <Ghost size={64} color="#B0B0B0" />
-                  )}
-                </div>
-                <h3 className="text-2xl font-bold mb-1 text-gray-900">{profileUser.first_name} {profileUser.last_name}</h3>
-                <p className="text-gray-500 mb-4">@{profileUser.username}</p>
-                <div className="w-full flex flex-col gap-2 text-left">
-                  <div className="flex items-center gap-2"><span className="font-semibold w-28">Email:</span> <span className="text-gray-700">{profileUser.email}</span></div>
-                  <div className="flex items-center gap-2"><span className="font-semibold w-28">Phone:</span> <span className="text-gray-700">{profileUser.phone_number}</span></div>
-                  <div className="flex items-center gap-2"><span className="font-semibold w-28">Aadhaar:</span> <span className="text-gray-700">{profileUser.aadhaar_number}</span></div>
-                  <div className="flex items-center gap-2"><span className="font-semibold w-28">PAN:</span> <span className="text-gray-700">{profileUser.pan_number}</span></div>
-                </div>
-                <div className="flex gap-4 mt-8">
-                  <button onClick={() => setEditMode(true)} className="px-6 py-2 bg-black text-white rounded-full font-semibold hover:bg-primary-dark">Update</button>
+              <div className="flex flex-row gap-2 w-full justify-center md:justify-start">
+                <button 
+                  onClick={() => setEditMode(true)} 
+                  className="w-full md:w-auto bg-black text-white text-md rounded-full px-4 py-1 cursor-pointer hover:bg-gray-800"
+                >
+                  Edit Profile
+                </button>
                   <AlertDialog.Root open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
                     <AlertDialog.Trigger asChild>
-                      <button onClick={() => setShowDeleteDialog(true)} disabled={loading} className="px-6 py-2 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700">{loading ? 'Deleting...' : 'Delete Account'}</button>
+                    <button 
+                      onClick={() => setShowDeleteDialog(true)} 
+                      disabled={loading} 
+                      className="w-full md:w-auto bg-red-600 text-white text-md rounded-full px-4 py-1 cursor-pointer hover:bg-red-700 disabled:opacity-60"
+                    >
+                      {loading ? 'Deleting...' : 'Delete Account'}
+                    </button>
                     </AlertDialog.Trigger>
                     <AlertDialog.Portal>
                       <AlertDialog.Overlay className="fixed inset-0 bg-black/40 z-50" />
@@ -224,18 +251,183 @@ export default function Profile() {
                   </AlertDialog.Root>
                 </div>
               </div>
-            )}
+          </motion.div>
+
+          {/* Personal Information Section */}
+          <div className="flex flex-col border-1 border-gray-100 rounded-2xl p-4 justify-center">
+            <motion.div 
+              className="flex flex-col items-start gap-2 mb-2"
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
+              <span className="text-sm text-gray-400">Personal Information</span>
+              <div className="flex items-center gap-2">
+                <User size={16} className="text-gray-400" />
+                <span>{profileUser.first_name} {profileUser.last_name}</span>
+              </div>
+            </motion.div>
           </div>
-        ) : (
-          <div>
-            <p className="mb-6 text-md text-gray-400">You're not logged in</p>
-            <div className="flex justify-center gap-4">
-              <Link to="/signup" className="px-6 py-2 bg-black text-white rounded-full font-semibold hover:bg-primary-dark">Sign Up</Link>
-              <Link to="/login" className="px-6 py-2 bg-gray-200 text-black rounded-full font-semibold hover:bg-gray-300">Log in</Link>
+
+          {/* Contact Information Section */}
+          <div className="flex flex-col border-1 border-gray-100 rounded-2xl p-4">
+            <motion.div 
+              className="flex flex-col mb-2 text-left"
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+            >
+              <span className="text-lg font-semibold">Contact Information</span>
+              <div className="flex flex-col gap-2 mt-2">
+                <div className="flex items-center gap-2">
+                  <Mail size={16} className="text-gray-400" />
+                  <span className="text-sm text-gray-400">Email:</span>
+                  <span>{profileUser.email}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone size={16} className="text-gray-400" />
+                  <span className="text-sm text-gray-400">Phone:</span>
+                  <span>{profileUser.phone_number}</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Identity Documents Section */}
+          <div className="flex flex-col border-1 border-gray-100 rounded-2xl p-4">
+            <motion.div 
+              className="flex flex-col mb-2 text-left"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+            >
+              <span className="text-lg font-semibold">Identity Documents</span>
+              <div className="flex flex-col gap-2 mt-2">
+                <div className="flex items-center gap-2">
+                  <CreditCard size={16} className="text-gray-400" />
+                  <span className="text-sm text-gray-400">Aadhaar:</span>
+                  <span>{profileUser.aadhaar_number}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FileText size={16} className="text-gray-400" />
+                  <span className="text-sm text-gray-400">PAN:</span>
+                  <span>{profileUser.pan_number}</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Favorites Section */}
+          <div className="flex flex-col border-1 border-gray-100 rounded-2xl p-4">
+            <motion.div 
+              className="flex flex-col mb-2 text-left"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+            >
+              <span className="text-lg font-semibold">Favorites</span>
+              <div className="flex flex-col gap-2 mt-2">
+                <div className="flex items-center gap-2">
+                  <Heart size={16} className="text-red-500" />
+                  <span className="text-sm text-gray-400">Saved Properties:</span>
+                  <span className="font-semibold">{favourites.length}</span>
+                </div>
+                <Link 
+                  to="/favourite" 
+                  className="mt-3 w-full bg-black text-white text-center rounded-full px-4 py-2 font-semibold hover:bg-gray-800 transition-colors"
+                >
+                  View Favorites
+                </Link>
             </div>
+            </motion.div>
           </div>
-        )}
-      </motion.div>
+
+          {/* Edit Form Section */}
+          {editMode && (
+            <motion.div 
+              className="md:col-span-2 border-1 border-gray-100 rounded-2xl p-4"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+            >
+              <h3 className="text-lg font-semibold mb-4">Edit Profile Information</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-medium">First Name
+                    <input 
+                      name="first_name" 
+                      value={form.first_name} 
+                      onChange={handleChange} 
+                      className="border rounded-lg px-3 py-2 w-full mt-1 focus:outline-none focus:ring-2 focus:ring-black" 
+                    />
+                  </label>
+                  <label className="text-sm font-medium">Last Name
+                    <input 
+                      name="last_name" 
+                      value={form.last_name} 
+                      onChange={handleChange} 
+                      className="border rounded-lg px-3 py-2 w-full mt-1 focus:outline-none focus:ring-2 focus:ring-black" 
+                    />
+                  </label>
+                  <label className="text-sm font-medium">Email
+                    <input 
+                      name="email" 
+                      value={form.email} 
+                      onChange={handleChange} 
+                      className="border rounded-lg px-3 py-2 w-full mt-1 focus:outline-none focus:ring-2 focus:ring-black" 
+                    />
+                  </label>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-medium">Username
+                    <input 
+                      name="username" 
+                      value={form.username} 
+                      onChange={handleChange} 
+                      className="border rounded-lg px-3 py-2 w-full mt-1 focus:outline-none focus:ring-2 focus:ring-black" 
+                    />
+                  </label>
+                  <label className="text-sm font-medium">Phone Number
+                    <input 
+                      name="phone_number" 
+                      value={form.phone_number} 
+                      onChange={handleChange} 
+                      className="border rounded-lg px-3 py-2 w-full mt-1 focus:outline-none focus:ring-2 focus:ring-black" 
+                    />
+                  </label>
+                  <label className="text-sm font-medium">Aadhaar Number
+                    <input 
+                      name="aadhaar_number" 
+                      value={form.aadhaar_number} 
+                      onChange={handleChange} 
+                      className="border rounded-lg px-3 py-2 w-full mt-1 focus:outline-none focus:ring-2 focus:ring-black" 
+                    />
+                  </label>
+                </div>
+              </div>
+              <div className="flex gap-2 mt-4">
+                <button 
+                  onClick={handleUpdate} 
+                  disabled={loading} 
+                  className="px-6 py-2 bg-black text-white rounded-full font-semibold hover:bg-gray-800 disabled:opacity-60"
+                >
+                  {loading ? 'Updating...' : 'Update Profile'}
+                </button>
+                <button 
+                  onClick={() => setEditMode(false)} 
+                  className="px-6 py-2 bg-gray-200 text-black rounded-full font-semibold hover:bg-gray-300"
+                >
+                  Cancel
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

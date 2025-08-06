@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useUser } from "./UserContext";
 
 export const navLinks = [
-  { name: "Search Properties", path: "/search-result" },
-  { name: "Favourite", path: "/favourite" },
+  // { name: "Search Properties", path: "/search-result" },
+  // { name: "Favourite", path: "/favourite" },
   { name: "Profile", path: "/profile" },
   { name: "Submit Property", path: "/submit-property" },
 ];
@@ -78,9 +78,11 @@ export default function Navbar() {
       );
       if (!res.ok) throw new Error("Logout failed");
       setUser(null);
-      window.location.href = "/login";
+      window.location.href = "/";
     } catch (err) {
-      alert("Logout failed. Please try again.");
+      console.error("Logout error:", err);
+      setUser(null);
+      window.location.href = "/";
     }
   };
 
@@ -178,7 +180,6 @@ export default function Navbar() {
       transition={{ duration: 0.28, ease: "easeOut" }}
       className="md:hidden mt-2 bg-white/95 rounded-xl shadow-lg p-4 w-full max-h-[80vh] overflow-y-auto"
     >
-      {/* navLinks */}
       <div className="flex flex-col items-center gap-2">
         {navLinks.map(link => (
           <Link
@@ -193,7 +194,6 @@ export default function Navbar() {
       </div>
       <h1>Hello</h1>
 
-      {/* extraNavLinks Accordion */}
       <div className="flex flex-col mt-4 items-center gap-1 w-full">
         {extraNavLinks.map((item, idx) => (
           <div key={item.name} className="w-full">
@@ -236,7 +236,6 @@ export default function Navbar() {
         ))}
       </div>
 
-      {/* Auth Buttons */}
       <div className="flex flex-col gap-2 mt-4 w-full px-4">
         {user ? (
           <button

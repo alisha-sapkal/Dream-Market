@@ -36,6 +36,9 @@ export default function SignIn() {
         first_name: data.first_name,
         last_name: data.last_name,
         phone_number: data.phone_number,
+        aadhaar_number: data.aadhaar_number || '',
+        pan_number: data.pan_number || '',
+        profile_picture: data.profile_picture || '',
       });
       toast.success('Login successful!');
       setTimeout(() => navigate('/'), 1200);

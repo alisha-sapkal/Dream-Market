@@ -5,8 +5,27 @@ import { useUser } from "../components/UserContext";
 export default function Footer() {
   const { user, setUser } = useUser();
 
-  const handleLogout = () => {
-    setUser(null);
+  const handleLogout = async () => {
+    try {
+      const res = await fetch(
+        "https://dreamservice.onrender.com/api/buyer/buyer-logout",
+        {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": "GBDabkcGa24yFjSf7JVeMnetua0eVdSe",
+            Referer: "https://dreamservice.onrender.com",
+          },
+          credentials: "include",
+        }
+      );
+      if (!res.ok) throw new Error("Logout failed");
+      setUser(null);
+      window.location.href = "/";
+    } catch (err) {
+      console.error("Logout error:", err);
+      setUser(null);
+      window.location.href = "/";
+    }
   };
 
   return (
@@ -41,33 +60,55 @@ export default function Footer() {
               </a>
             </div>
             <div className="hidden md:flex order-3 md:order-2">
-              <Link
-                to="/signup"
-                className="ml-4 px-4 py-1 bg-black text-white rounded-full hover:bg-primary-dark"
-              >
-                Sign Up
-              </Link>
-              <Link
-                to="/login"
-                className="ml-2 px-4 py-1 text-center border bg-gray-200 rounded-full hover:bg-primary-light"
-              >
-                Login
-              </Link>
+              {user ? (
+                <button
+                  onClick={handleLogout}
+                  className="ml-2 px-4 py-1 text-center border bg-gray-200 rounded-full hover:bg-red-400"
+                >
+                  Logout
+                </button>
+              ) : (
+                <>
+                  <Link
+                    to="/signup"
+                    className="ml-4 px-4 py-1 bg-black text-white rounded-full hover:bg-primary-dark"
+                  >
+                    Sign Up
+                  </Link>
+                  <Link
+                    to="/login"
+                    className="ml-2 px-4 py-1 text-center border bg-gray-200 rounded-full hover:bg-primary-light"
+                  >
+                    Login
+                  </Link>
+                </>
+              )}
             </div>
           </div>
           <div className="flex md:hidden justify-center gap-2 mt-4 mb-2">
-            <Link
-              to="/signup"
-              className="px-4 py-2 bg-black text-white rounded-full hover:bg-primary-dark text-sm"
-            >
-              Sign Up
-            </Link>
-            <Link
-              to="/login"
-              className="px-4 py-2 text-center border bg-gray-200 rounded-full hover:bg-primary-light text-sm"
-            >
-              Login
-            </Link>
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 text-center border bg-gray-200 rounded-full hover:bg-red-400 text-sm"
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/signup"
+                  className="px-4 py-2 bg-black text-white rounded-full hover:bg-primary-dark text-sm"
+                >
+                  Sign Up
+                </Link>
+                <Link
+                  to="/login"
+                  className="px-4 py-2 text-center border bg-gray-200 rounded-full hover:bg-primary-light text-sm"
+                >
+                  Login
+                </Link>
+              </>
+            )}
           </div>
           <div
             className="relative w-full overflow-hidden mt-8"
