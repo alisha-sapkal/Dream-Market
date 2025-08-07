@@ -192,7 +192,6 @@ export default function Navbar() {
           </Link>
         ))}
       </div>
-      <h1>Hello</h1>
 
       <div className="flex flex-col mt-4 items-center gap-1 w-full">
         {extraNavLinks.map((item, idx) => (

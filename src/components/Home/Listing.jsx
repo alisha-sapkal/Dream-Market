@@ -231,10 +231,10 @@ function Listing({ searchTerm = "", selectedCategory = "All" }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 + idx * 0.1, duration: 0.4 }}
                   >
-                    <span className="bg-primary text-white text-xs font-semibold uppercase rounded-full px-2 py-1 sm:px-3 shadow">
+                    <span className="bg-white/30 backdrop-blur-md text-white text-xs font-semibold uppercase rounded-full px-2 py-1 sm:px-3 shadow">
                       {listing.type}
                     </span>
-                    <span className="bg-primary text-white text-xs font-semibold uppercase rounded-full px-2 py-1 sm:px-3 shadow">
+                    <span className="bg-white/30 backdrop-blur-md text-white text-xs font-semibold uppercase rounded-full px-2 py-1 sm:px-3 shadow">
                       {listing.category}
                     </span>
                   </motion.div>
