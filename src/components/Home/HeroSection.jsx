@@ -6,11 +6,11 @@ import SearchBar from "../SearchBar";
 const HERO_BG =
   "url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80')";
 
-const categories = ["All", "New launch", "Commercial", "Projects"]
+const categories = ["New launch", "Commercial", "Projects"]
 
 export default function HeroSection({ onSearch, onCategoryChange }) {
   const [searchTerm, setSearchTerm] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [selectedCategory, setSelectedCategory] = useState("New launch")
 
   const handleSearch = () => {
     if (onSearch) onSearch(searchTerm)
