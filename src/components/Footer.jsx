@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Instagram, Mail, Facebook, Phone } from "lucide-react"
 import { useUser } from "../components/UserContext";
 
 export default function Footer() {
   const { user, setUser } = useUser();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -164,6 +165,14 @@ export default function Footer() {
             </Link>
           </>
         )}
+      </div>
+      <div className="flex justify-center mt-6 mb-2">
+        <button
+          onClick={() => navigate("/subscribe")}
+          className="px-6 py-2 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition"
+        >
+          Subscribe
+        </button>
       </div>
     </footer>
   );

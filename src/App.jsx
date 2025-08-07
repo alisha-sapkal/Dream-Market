@@ -16,6 +16,7 @@ import StickySearchBar from './components/StickySearchBar';
 import { useUser } from './components/UserContext';
 import CompanyDetailsForm from './components/SubmitProperty/CompanyDetailsForm';
 import AgentDetailsForm from './components/SubmitProperty/AgentDetailsForm';
+import Subscribe from "./components/Subscribe";
 
 function Layout({ children }) {
   const location = useLocation();
@@ -79,6 +80,7 @@ function App() {
           <Route path="/agent/:agentName" element={<AgentProfile />} />
           <Route path="/builder-company-details" element={<CompanyDetailsForm />} />
           <Route path="/agent-business-details" element={<AgentDetailsForm />} />
+          <Route path="/subscribe" element={<Subscribe />} />
         </Routes>
       </Layout>
     </Router>
